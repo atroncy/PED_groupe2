@@ -78,6 +78,8 @@ public class ConsoleModel extends Observable{
 		} 
 	}
 	
+	
+	//TODO : todo or not to do , that's the question
 	public class WatchingLog extends Thread{
 		public void run(){
 			try {

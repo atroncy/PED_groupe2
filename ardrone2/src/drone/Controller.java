@@ -8,8 +8,8 @@ public class Controller {
 	private ConsoleModel _consoleModel;
 
 	public int getSeq() {
-		return _connectionFake.getSeq();
-		//return _connection.getSeq();
+	//	return _connectionFake.getSeq();
+		return _connection.getSeq();
 	}
 
 	public Controller(String addr, 
@@ -17,14 +17,14 @@ public class Controller {
 					String addrFake, 
 					int portFake, 
 					ConsoleModel consoleModel) throws InterruptedException {
-	//	_connection = new Connection(addr, port, "\r");
+		_connection = new Connection(addr, port, "\r");
 		_connectionFake = new Connection(addrFake, portFake, "\n");
 		_consoleModel = consoleModel;
-	//	this.initialize();
+		this.initialize();
 	}
 
 	public void sendMessage(String message) {
-	//	_connection.sendMessage(message + "\r");
+		_connection.sendMessage(message + "\r");
 		_connectionFake.sendMessage(message + "\n");
 	}
 
