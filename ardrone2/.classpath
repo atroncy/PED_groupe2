@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="libs/artoolkitplus.jar"/>
+	<classpathentry kind="lib" path="libs/artoolkitplus-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/artoolkitplus-linux-x86.jar"/>
+	<classpathentry kind="lib" path="libs/ffmpeg.jar"/>
+	<classpathentry kind="lib" path="libs/ffmpeg-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/ffmpeg-linux-x86.jar"/>
+	<classpathentry kind="lib" path="libs/flycapture.jar"/>
+	<classpathentry kind="lib" path="libs/flycapture-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/flycapture-linux-x86.jar"/>
+	<classpathentry kind="lib" path="libs/javacpp.jar"/>
+	<classpathentry kind="lib" path="libs/javacv.jar"/>
+	<classpathentry kind="lib" path="libs/libdc1394.jar"/>
+	<classpathentry kind="lib" path="libs/libdc1394-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/libdc1394-linux-x86.jar"/>
+	<classpathentry kind="lib" path="libs/libfreenect.jar"/>
+	<classpathentry kind="lib" path="libs/libfreenect-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/libfreenect-linux-x86.jar"/>
+	<classpathentry kind="lib" path="libs/opencv.jar"/>
+	<classpathentry kind="lib" path="libs/opencv-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="libs/opencv-linux-x86.jar"/>
+	<classpathentry kind="lib" path="libs/videoinput.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
