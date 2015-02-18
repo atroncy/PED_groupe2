@@ -49,7 +49,7 @@ public class KeepAlive extends Thread {
 			
 			message = Commands.configCameraHorizontal(_controller.getSeq());
 			_controller.sendMessage(message);
-			
+			System.out.println(_controller.getAddr());
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

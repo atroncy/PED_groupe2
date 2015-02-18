@@ -29,7 +29,8 @@ public class ModelPanel extends JPanel implements Observer{
 	public ModelPanel(KeyboardDrone k,ConsoleModel model){
 		
 		this.setLayout(new BorderLayout());
-		this.setSize(180,240);
+		this.setSize(640, 520);
+		
 		
 		// NavData
 		JPanel navPanel = new JPanel(new BorderLayout());

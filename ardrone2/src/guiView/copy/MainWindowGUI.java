@@ -30,8 +30,8 @@ public class MainWindowGUI extends JFrame{
 		DronePanelGUI dronePanel2 = new DronePanelGUI(k2, model2, controller2);
 		
 		this.add(dronePanel1, BorderLayout.WEST);
-		this.add(dronePanel2, BorderLayout.CENTER);
-		this.add(rightPanel, BorderLayout.EAST);
+		this.add(dronePanel2, BorderLayout.EAST);
+		this.add(rightPanel, BorderLayout.CENTER);
 		
 		this.setVisible(true);
 		

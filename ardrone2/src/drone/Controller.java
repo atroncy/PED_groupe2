@@ -6,10 +6,15 @@ import guiModel.ConsoleModel;
 public class Controller {
 	private Connection _connection, _connectionFake;
 	private ConsoleModel _consoleModel;
-
+	private String _addr;
+	
 	public int getSeq() {
 	//	return _connectionFake.getSeq();
 		return _connection.getSeq();
+	}
+	
+	public String getAddr() {
+		return _addr;
 	}
 
 	public Controller(String addr, 
@@ -17,6 +22,7 @@ public class Controller {
 					String addrFake, 
 					int portFake, 
 					ConsoleModel consoleModel) throws InterruptedException {
+		_addr = addr;
 		_connection = new Connection(addr, port, "\r");
 		_connectionFake = new Connection(addrFake, portFake, "\n");
 		_consoleModel = consoleModel;
@@ -40,7 +46,7 @@ public class Controller {
 
 	// sequence d'initialisation a executer avant tout autre commande a envoyer
 	public void initialize() throws InterruptedException {
-		System.out.println("initialisation du drone\n");
+		System.out.println("initialisation du drone : " + _addr +" \n");
 		_consoleModel.writeInFile("UAV is inializing. Please wait...");
 		sendMessage(Commands.configIDS(_connection.getSeq()));
 		sendMessage(Commands.config("custom:session_id", "-all",
