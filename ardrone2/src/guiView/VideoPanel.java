@@ -1,4 +1,4 @@
-package guiView.copy;
+package guiView;
 
 
 import java.awt.BorderLayout;

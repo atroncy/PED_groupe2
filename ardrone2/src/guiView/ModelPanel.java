@@ -1,4 +1,4 @@
-package guiView.copy;
+package guiView;
 
 import guiModel.ConsoleModel;
 import guiListener.KeyboardDrone;

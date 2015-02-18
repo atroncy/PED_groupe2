@@ -1,6 +1,6 @@
 package video;
 
-import guiView.copy.VideoPanel;
+import guiView.VideoPanel;
 
 import java.awt.image.BufferedImage;
 
@@ -13,16 +13,16 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 
 public class FrameGrabber extends Thread{
-	
-	private Controller _controller;
+
 	private VideoPanel _panel;
 	private IplImage _iplImage;
 	private BufferedImage _camImg;
+	private FFmpegFrameGrabber _fg;
 	
 	public FrameGrabber(Controller controller, VideoPanel panel){
 		Loader.load(swresample.class);
-		_controller = controller;
 		_panel = panel;
+		_fg = new FFmpegFrameGrabber("tcp://"+controller.getAddr()+":5555");
 	}
 	
 	
@@ -33,10 +33,10 @@ public class FrameGrabber extends Thread{
 	
 	public void run(){
 		int i = 0;
-		FFmpegFrameGrabber _ffg = new FFmpegFrameGrabber("tcp://"+_controller.getAddr()+":5555");
+		
 		
 		try {
-			_ffg.start();
+			_fg.start();
 			
 			Thread.sleep(1000);
 			
@@ -44,9 +44,9 @@ public class FrameGrabber extends Thread{
 				++i;
 				
 				if(i==60){
-					_ffg.restart();
+					_fg.restart();
 				}
-				_iplImage = _ffg.grab();
+				_iplImage = _fg.grab();
 				_camImg = _iplImage.getBufferedImage();
 				_panel.setSize(640,360);
 				_panel.setCam(_camImg);
