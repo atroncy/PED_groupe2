@@ -5,17 +5,22 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.NavData;
+
 public class DroneReceivePanel extends JPanel implements Observer{
 	
 	private JTextField _tfSettedAltitude, _tfSettedPanAngle, _tfSettedSpeed, _tfCurrentAltitude, _tfCurrentPanAngle, _tfCurrentSpeed, _tfCurrentState, _tfSettedMedia;
+	private NavData _nav;
+	
+	public DroneReceivePanel(NavData nav){
 		
-	public DroneReceivePanel(){
-			
+		_nav = nav;
+		_nav.addObserver(this);
+		
 		this.setLayout(new BorderLayout());
 		
 		JLabel labelSetted = new JLabel("Setted");
@@ -24,26 +29,26 @@ public class DroneReceivePanel extends JPanel implements Observer{
 		JLabel labelSettedSpeed = new JLabel("Vertical Speed");
 		JLabel labelSettedMedia = new JLabel("Media Recording");
 		_tfSettedAltitude = new JTextField();
-		_tfSettedAltitude.setEnabled(false);
+		_tfSettedAltitude.setEditable(false);
 		_tfSettedPanAngle = new JTextField();
-		_tfSettedPanAngle.setEnabled(false);
+		_tfSettedPanAngle.setEditable(false);
 		_tfSettedSpeed = new JTextField();
-		_tfSettedSpeed.setEnabled(false);
+		_tfSettedSpeed.setEditable(false);
 		_tfSettedMedia = new JTextField();
-		_tfSettedMedia.setEnabled(false);
+		_tfSettedMedia.setEditable(false);
 		JLabel labelCurrent = new JLabel("Current");
 		JLabel labelCurentAltitude = new JLabel("Altitude Max");
 		JLabel labelCurrentPanAngle = new JLabel("Panning");
 		JLabel labelCurrentSpeed = new JLabel("Vertical Speed");
 		JLabel labelCurrentState = new JLabel("Drone State");
 		_tfCurrentAltitude = new JTextField();
-		_tfCurrentAltitude.setEnabled(false);
+		_tfCurrentAltitude.setEditable(false);
 		_tfCurrentPanAngle = new JTextField();
-		_tfCurrentPanAngle.setEnabled(false);
+		_tfCurrentPanAngle.setEditable(false);
 		_tfCurrentSpeed = new JTextField();
-		_tfCurrentSpeed.setEnabled(false);
+		_tfCurrentSpeed.setEditable(false);
 		_tfCurrentState = new JTextField();
-		_tfCurrentState.setEnabled(false);
+		_tfCurrentState.setEditable(false);
 
 		
 		Box left = Box.createVerticalBox();
@@ -90,18 +95,13 @@ public class DroneReceivePanel extends JPanel implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		/*
-		 * _tfSettedAltitude.setText(_parsed.Truc)
-		 * _tfSettedPanAngle
-		 * _tfSettedSpeed
-		 * _tfCurrentAltitude
-		 * _tfCurrentPanAngle
-		 * _tfCurrentSpeed
-		 * _tfCurrentState
-		 * _tfSettedMedia
-		 * 
-		 */
-		
+		_tfSettedAltitude.setText(String.valueOf(_nav.getAltitudeMax()));
+		//_tfSettedPanAngle.setText();
+		_tfSettedSpeed.setText(String.valueOf(_nav.getSpeedMax()));
+		_tfCurrentAltitude.setText(String.valueOf(_nav.getCurrentAltitude()));
+		//_tfCurrentPanAngle.setText();
+		_tfCurrentSpeed.setText(String.valueOf(_nav.getCurrentSpeed()));
+		_tfCurrentState.setText(_nav.getDroneState());
+		_tfSettedMedia.setText(_nav.getMediaRecordState());
 	}
 }
