@@ -19,7 +19,6 @@ public class NavData extends Observable{
 		_currentAltitude = -1;
 		_droneState = "unknown";
 		_mediaRecordState = "unknown";
-		this.notifyObservers();
 	}
 			
 	public void setSpeedMax(ByteBuffer args){

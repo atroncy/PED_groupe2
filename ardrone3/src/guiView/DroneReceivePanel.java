@@ -13,7 +13,7 @@ import model.NavData;
 
 public class DroneReceivePanel extends JPanel implements Observer{
 	
-	private JTextField _tfSettedAltitude, _tfSettedPanAngle, _tfSettedSpeed, _tfCurrentAltitude, _tfCurrentPanAngle, _tfCurrentSpeed, _tfCurrentState, _tfSettedMedia;
+	private JTextField _tfSettedAltitude, _tfSettedPanAngle, _tfSettedSpeed, _tfCurrentAltitude, _tfCurrentPanAngle, _tfCurrentSpeed, _tfCurrentState, _tfCurrentMedia;
 	private NavData _nav;
 	
 	public DroneReceivePanel(NavData nav){
@@ -27,20 +27,20 @@ public class DroneReceivePanel extends JPanel implements Observer{
 		JLabel labelSettedAltitude = new JLabel("Altitude Max");
 		JLabel labelSettedPanAngle = new JLabel("Panning");
 		JLabel labelSettedSpeed = new JLabel("Vertical Speed");
-		JLabel labelSettedMedia = new JLabel("Media Recording");
 		_tfSettedAltitude = new JTextField();
 		_tfSettedAltitude.setEditable(false);
 		_tfSettedPanAngle = new JTextField();
 		_tfSettedPanAngle.setEditable(false);
 		_tfSettedSpeed = new JTextField();
 		_tfSettedSpeed.setEditable(false);
-		_tfSettedMedia = new JTextField();
-		_tfSettedMedia.setEditable(false);
+		_tfCurrentMedia = new JTextField();
+		_tfCurrentMedia.setEditable(false);
 		JLabel labelCurrent = new JLabel("Current");
 		JLabel labelCurentAltitude = new JLabel("Altitude Max");
 		JLabel labelCurrentPanAngle = new JLabel("Panning");
 		JLabel labelCurrentSpeed = new JLabel("Vertical Speed");
 		JLabel labelCurrentState = new JLabel("Drone State");
+		JLabel labelCurrentMedia = new JLabel("Media Recording");
 		_tfCurrentAltitude = new JTextField();
 		_tfCurrentAltitude.setEditable(false);
 		_tfCurrentPanAngle = new JTextField();
@@ -62,8 +62,6 @@ public class DroneReceivePanel extends JPanel implements Observer{
 		left.add(labelSettedPanAngle);
 		left.add(Box.createVerticalStrut(5));
 		left.add(labelSettedSpeed);
-		left.add(Box.createVerticalStrut(5));
-		left.add(labelSettedMedia);
 		left.add(Box.createVerticalStrut(40));
 		left.add(labelCurrent);
 		left.add(Box.createVerticalStrut(5));
@@ -74,17 +72,19 @@ public class DroneReceivePanel extends JPanel implements Observer{
 		left.add(labelCurrentSpeed);
 		left.add(Box.createVerticalStrut(5));
 		left.add(labelCurrentState);
+		left.add(Box.createVerticalStrut(5));
+		left.add(labelCurrentMedia);
 		
-		right.add(Box.createVerticalStrut(33));
+		right.add(Box.createVerticalStrut(30));
 		right.add(_tfSettedAltitude);
 		right.add(_tfSettedPanAngle);
 		right.add(_tfSettedSpeed);
-		right.add(_tfSettedMedia);
-		right.add(Box.createVerticalStrut(56));
+		right.add(Box.createVerticalStrut(62));
 		right.add(_tfCurrentAltitude);
 		right.add(_tfCurrentPanAngle);
 		right.add(_tfCurrentSpeed);
 		right.add(_tfCurrentState);
+		right.add(_tfCurrentMedia);
 		right.add(Box.createVerticalStrut(20));
 		
 		oui.add(left);
@@ -102,6 +102,6 @@ public class DroneReceivePanel extends JPanel implements Observer{
 		//_tfCurrentPanAngle.setText();
 		_tfCurrentSpeed.setText(String.valueOf(_nav.getCurrentSpeed()));
 		_tfCurrentState.setText(_nav.getDroneState());
-		_tfSettedMedia.setText(_nav.getMediaRecordState());
+		_tfCurrentMedia.setText(_nav.getMediaRecordState());
 	}
 }
