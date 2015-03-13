@@ -61,6 +61,7 @@ public class MessageHandler {
 	public static Command takeoff(byte seq){
 		Command cmd_takeoff = new Command(TYPE_DATA_WITH_ACK, 11, seq, PROJECT, PILOTING, TAKE_OFF);
 		cmd_takeoff._size = 11;
+		
 		//cm.addText("take off");
 		return cmd_takeoff;
 	}
@@ -163,6 +164,10 @@ public class MessageHandler {
 		return cmd_rec;
 			
 	}
+	
+	
+	
+	//TODO set vitesse + altitude
 	
 	
 }

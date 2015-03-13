@@ -2,6 +2,8 @@ package ardrone3;
 
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 import javax.xml.bind.DatatypeConverter;
 
 public class Command {
@@ -55,7 +57,7 @@ public class Command {
 	 * @param command
 	 * @return
 	 */
-	private byte[] commandToByteArray(){
+	public byte[] commandToByteArray(){
 		byte[] array = new byte[this._size];
 		array[0] = this._type;
 		array[1] = this._id;
@@ -101,6 +103,26 @@ public class Command {
 	}
 	
 
+	public byte[] doubleToIeee754 (double value){
+		long holder = 0;
+		holder = Double.doubleToRawLongBits(value);
+		ByteBuffer buffer = ByteBuffer.allocate(Long.SIZE);
+		buffer.order(ByteOrder.LITTLE_ENDIAN);
+		buffer.putLong(holder);
+		
+		return buffer.array();
+	}
+	
+	public byte[] floatToIeee754 (float value){
+		int holder = 0;
+		holder = Float.floatToRawIntBits(value);
+		ByteBuffer buffer = ByteBuffer.allocate(Integer.SIZE);
+		buffer.order(ByteOrder.LITTLE_ENDIAN);
+		buffer.putInt(holder);
+		
+		return buffer.array();
+	}
+	
 }
 
 	
