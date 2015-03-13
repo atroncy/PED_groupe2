@@ -81,7 +81,7 @@ public class Command {
 	 * @param value
 	 * @return
 	 */
-	private static byte[] intToByteArray(int value){
+	public static byte[] intToByteArray(int value){
 	    return new byte[] {
 	            (byte)value,
 	            (byte)(value >>> 8),
@@ -94,7 +94,7 @@ public class Command {
 	 * @param value
 	 * @return
 	 */
-	private static byte[] shortToByteArray(short value){
+	public static byte[] shortToByteArray(short value){
 	    return new byte[] {
 	    		(byte)value,
 	    		(byte)(value >>> 8)};
