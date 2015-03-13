@@ -9,8 +9,11 @@ import model.NavData;
 public class Parser {
 
 		//type
-	private final static int DATA = (0x02); 
-	private final static int DATA_WITH_ACK = (0x04); 
+	private final static int ACK = (0x01);
+	private final static int DATA = (0x02);
+	private final static int LOW_DELAY = (0x03);
+	private final static int DATA_WITH_ACK = (0x04);
+	
 	
 	//project
 	private final static int PROJECT_BEBOP = (0x01);
@@ -41,13 +44,15 @@ public class Parser {
 		int size = 0, offset = 0, type = 0, project = 0,classs = 0, cmd = 0;
 		ByteBuffer sizeDecoder = null, args = null;
 
-		//Parsed all the ArDrone3 message included in the packet and search for ArCommands needed for NavData 
+		//Parse all the ArDrone3 message included in the packet and search for ArCommands needed for NavData 
 		do{
 			type = packetAD3[offset];
 			sizeDecoder = ByteBuffer.wrap(packetAD3, offset+3, 4).order(ByteOrder.LITTLE_ENDIAN);
 			size = sizeDecoder.getInt();
 			switch(type){
-			case DATA_WITH_ACK:
+			case ACK:
+				break;
+			case DATA:
 				project = packetAD3[offset+7]; 
 				switch(project){
 				case PROJECT_BEBOP:
@@ -97,7 +102,9 @@ public class Parser {
 					break;
 				}
 				break;
-			case DATA:
+			case LOW_DELAY:
+				break;
+			case DATA_WITH_ACK:
 				project = packetAD3[offset+7];
 				switch(project){
 				case PROJECT_BEBOP:
@@ -149,10 +156,11 @@ public class Parser {
 				break;
 			default:
 				System.out.println("I ain't got no type. I got it!");
-				break;
+				return; //Only way to get out of the loop
 			}
 			offset = offset + size;
 			packetRemain = packetRemain - size;
-		}while(packetRemain != 0);
+		}while(packetRemain != 0); //Useful for test
+		System.out.println("sortie");
 	}
 }

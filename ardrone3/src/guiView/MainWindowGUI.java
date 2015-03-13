@@ -1,10 +1,13 @@
 package guiView;
 
+import guiListener.KeyboardDrone;
+
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 
 import ardrone3.Parser;
+import ardrone3.ServerUDP;
 
 import model.NavData;
 
@@ -13,7 +16,7 @@ public class MainWindowGUI extends JFrame{
 	private static final int HEIGHT	= 300;
 	private static final String TITLE = "Oui";
 	
-	public MainWindowGUI(NavData nav1, NavData nav2){
+	public MainWindowGUI(NavData nav1, NavData nav2, KeyboardDrone k1, KeyboardDrone k2){
 		
 		this.setTitle(TITLE);
 		this.setSize(WIDTH,HEIGHT);
@@ -21,8 +24,8 @@ public class MainWindowGUI extends JFrame{
 		
 		this.setLayout(new GridLayout(1,3));
 		
-		DroneGUI drone1 = new DroneGUI("Drone Uno",nav1);
-		DroneGUI drone2 = new DroneGUI("Drone Duo",nav2);
+		DroneGUI drone1 = new DroneGUI("Drone Uno",nav1,k1);
+		DroneGUI drone2 = new DroneGUI("Drone Duo",nav2,k2);
 		UserPanel user = new UserPanel();
 		
 		this.add(user);
@@ -35,7 +38,9 @@ public class MainWindowGUI extends JFrame{
 	public static void main (String[] args){
 		NavData nav1 = new NavData();
 		NavData nav2 = new NavData();
-		MainWindowGUI mw = new MainWindowGUI(nav1,nav2);
+		KeyboardDrone k1 = new KeyboardDrone();
+		KeyboardDrone k2 = new KeyboardDrone();
+		MainWindowGUI mw = new MainWindowGUI(nav1,nav2,k1,k2);
 		
 		try {
 			Thread.sleep(1000);
@@ -88,7 +93,10 @@ public class MainWindowGUI extends JFrame{
 				
 				
 		Parser p1 = new Parser(nav1);
+		ServerUDP s1 = new ServerUDP(p1,43210);
+		s1.start();
 		
+		/*
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -97,6 +105,6 @@ public class MainWindowGUI extends JFrame{
 		}
 		
 		p1.parse(grostasdeBits);
-	     
+	     */
 	}
 }

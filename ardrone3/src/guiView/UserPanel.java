@@ -1,7 +1,9 @@
 package guiView;
 
+
+import guiListener.MouseUser;
+
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -65,8 +67,11 @@ public class UserPanel extends JPanel{
 		bot.add(_stop);
 		bot.add(_video);
 		
-		//this.addMouseListener(_mouseListener(_lauch,_stop,_video));
+		MouseUser m = new MouseUser(_launch,_stop,_video);
 		
+		_launch.addMouseListener(m);
+		_stop.addMouseListener(m);
+		_video.addMouseListener(m);
 		this.add(oui,BorderLayout.CENTER);
 		this.add(bot,BorderLayout.SOUTH);
 		

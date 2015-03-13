@@ -1,5 +1,7 @@
 package guiView;
 
+import guiListener.KeyboardDrone;
+
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.util.Observable;
@@ -15,11 +17,11 @@ public class DroneSendPanel extends JPanel implements Observer{
 	private static final int NBCOLS = 15;
 	private JTextArea _consoleText;
 	
-	public DroneSendPanel(){
+	public DroneSendPanel(KeyboardDrone k){
 		
 		
 		_consoleText = new JTextArea("Oui");
-		
+		_consoleText.addKeyListener(k);
 		_consoleText.setRows(NBROWS);
 		_consoleText.setColumns(NBCOLS);
 		_consoleText.setEditable(false);
