@@ -6,14 +6,14 @@ import java.util.Observable;
 
 public class NavData extends Observable{
 
-	private float  _speed, _currentSpeed;
+	private float  _speedMax, _currentSpeed;
 	private double _altitudeMax, _currentAltitude;
 	private int _Pan; // DUNNNOOOO
 	private String _droneState, _mediaRecordState;
 	
 	
 	public NavData(){
-		_speed = -1;
+		_speedMax = -1;
 		_currentSpeed = -1;
 		_altitudeMax = -1;
 		_currentAltitude = -1;
@@ -22,15 +22,16 @@ public class NavData extends Observable{
 	}
 			
 	public void setSpeedMax(ByteBuffer args){
-		_speed = this.ieee754ToFloat(args);
+		_speedMax = this.ieee754ToFloat(args);
 		this.triggerChange();
 	}
 	
 	public float getSpeedMax(){
-		return _speed;
+		return _speedMax;
 	}
 		
 	public void setCurrentSpeed(ByteBuffer args){
+		args.position(11+8);
 		_currentSpeed = this.ieee754ToFloat(args);
 		this.triggerChange();
 	}
@@ -132,7 +133,7 @@ public class NavData extends Observable{
 	}
 	
 	
-	//TODO private later
+	//TODO private later or not ?
 	public void triggerChange(){
 		this.setChanged();
 		this.notifyObservers();

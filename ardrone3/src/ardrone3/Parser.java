@@ -8,7 +8,7 @@ import model.NavData;
 
 public class Parser {
 
-		//type
+	//type
 	private final static int ACK = (0x01);
 	private final static int DATA = (0x02);
 	private final static int LOW_DELAY = (0x03);
@@ -17,6 +17,7 @@ public class Parser {
 	
 	//project
 	private final static int PROJECT_BEBOP = (0x01);
+	private final static int PROJECT_COMMON = (0x00);
 	
 	//class
 	private final static int CLASS_PILOTING_STATE = (0x04);
@@ -97,7 +98,10 @@ public class Parser {
 						break;
 					default:
 						break;
-					}				
+					}
+					break;
+				case PROJECT_COMMON:
+					break;
 				default:
 					break;
 				}
@@ -150,6 +154,9 @@ public class Parser {
 					default:
 						break;
 					}
+					break;
+				case PROJECT_COMMON:
+					break;
 				default:
 					break;
 				}

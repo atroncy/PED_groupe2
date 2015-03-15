@@ -20,22 +20,21 @@ public class ServerUDP extends Thread{
 		try {
 			DatagramSocket serverSocket = new DatagramSocket(_UDPport);
 		
-		byte[] receiveData = new byte[1512];
-		
 			while(true){
+				byte[] receiveData = new byte[1512]; //never forget
 				DatagramPacket receivePacket = new DatagramPacket(receiveData,receiveData.length);
 				serverSocket.receive(receivePacket);
 				
 				byte packetAD3[] = receivePacket.getData();
+				System.out.println(receiveData[24]);
 				_parser.parse(packetAD3);
-				
+			
 			}
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
