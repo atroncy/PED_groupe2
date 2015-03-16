@@ -30,12 +30,25 @@ public class KeyboardDrone implements KeyListener{
 			_c.incSeqDataAck();
 			break;
 		case KeyEvent.VK_A:
-			System.out.println("A pressed : start recording");
-			_c.sendMessage(MessageHandler.recordStart(_c.getSeqDataAck()));
+			System.out.println("A pressed : set time and date");
+			_c.sendMessage(MessageHandler.setCurrentDate(_c.getSeqDataAck()));
+			_c.incSeqDataAck();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			_c.sendMessage(MessageHandler.setCurrentTime(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			break;
 		case KeyEvent.VK_Z:
-			System.out.println("Z pressed : stop recording");
+			System.out.println("Z pressed : start recording");
+			_c.sendMessage(MessageHandler.recordStart(_c.getSeqDataAck()));
+			_c.incSeqDataAck();
+			break;
+		case KeyEvent.VK_E:
+			System.out.println("E pressed : stop recording");
 			_c.sendMessage(MessageHandler.recordStop(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			break;

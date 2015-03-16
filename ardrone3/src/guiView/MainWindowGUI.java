@@ -66,8 +66,19 @@ public class MainWindowGUI extends JFrame{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+<<<<<<< HEAD
 	
 
 
+=======
+		
+		nav1.triggerChange();
+		nav2.triggerChange();
+		
+		
+		Parser p1 = new Parser(nav1);
+		ServerUDP s1 = new ServerUDP(p1,43210);
+		s1.start();
+>>>>>>> f603ba139f6f4df0eab90fef8c9e519f1479e141
 	}
 }
