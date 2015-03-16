@@ -7,9 +7,7 @@ from __future__ import unicode_literals
 import pexpect
 import sys
 
-# Note that, for Python 3 compatibility reasons, we are using spawnu and
-# importing unicode_literals (above). spawnu accepts Unicode input and
-# unicode_literals makes all string literals in this script Unicode by default.
+#Creation of a child process
 child = pexpect.spawn('ftp 192.168.42.1 21')
 
 child.expect('(?i)name .*: ')
@@ -21,20 +19,16 @@ child.sendline('ls')
 child.expect('ftp> ')
 child.sendline('prompt')
 child.expect('ftp> ')
-child.sendline('mget *.*')
-#child.sendline('get Bebop_Drone_2015-03-10T161049+0000_B0CA63.mp4')
+#Get all files from the Bebop
+child.sendline('mget -p -i *.*')
 child.expect('ftp> ')
-child.sendline('prompt')
-child.expect('ftp> ')
-child.sendline('mdel *.*')
-child.expect('ftp> ')
-child.sendline('bye')
-# The rest is not strictly necessary. This just demonstrates a few functions.
-# This makes sure the child is dead; although it would be killed when Python exits.
+#Delete all files from the Bebop to release memory
+child.sendline('mdel -p -i *.*')
+
 if child.isalive():
-    child.sendline('bye') # Try to ask ftp child to exit.
+    child.sendline('bye') 
     child.close()
-# Print the final state of the child. Normally isalive() should be FALSE.
+
 if child.isalive():
     print('Child did not exit gracefully.')
 else:
