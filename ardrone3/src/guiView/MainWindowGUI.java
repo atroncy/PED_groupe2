@@ -51,15 +51,6 @@ public class MainWindowGUI extends JFrame{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	
-
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		nav1.triggerChange();
 		nav2.triggerChange();
