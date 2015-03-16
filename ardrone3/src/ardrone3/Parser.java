@@ -9,31 +9,31 @@ import model.NavData;
 public class Parser {
 
 	//type
-	private final static int ACK = (0x01);
-	private final static int DATA = (0x02);
-	private final static int LOW_DELAY = (0x03);
-	private final static int DATA_WITH_ACK = (0x04);
+	private final static int ACK = 1;
+	private final static int DATA = 2;
+	private final static int LOW_DELAY = 3;
+	private final static int DATA_WITH_ACK = 4;
 	
 	
 	//project
-	private final static int PROJECT_BEBOP = (0x01);
-	private final static int PROJECT_COMMON = (0x00);
+	private final static int PROJECT_BEBOP = 1;
+	private final static int PROJECT_COMMON = 0;
 	
 	//class
-	private final static int CLASS_PILOTING_STATE = (0x04);
-	private final static int CLASS_PILOTING_SETTING_STATE = (0x06);
-	private final static int CLASS_MEDIA_RECORD_STATE = (0x08);
-	private final static int CLASS_SPEED_SETTING_STATE = (0x0c);
-	private final static int CLASS_CAMERA_STATE = (0x25);
+	private final static int CLASS_PILOTING_STATE = 4;
+	private final static int CLASS_PILOTING_SETTING_STATE = 6;
+	private final static int CLASS_MEDIA_RECORD_STATE = 8;
+	private final static int CLASS_SPEED_SETTING_STATE = 12;
+	private final static int CLASS_CAMERA_STATE = 25;
 	
 	//cmd 
-	private final static int CMD_FLYING_STATE_CHANGED = (0x01);
-	private final static int CMD_SPEED_CHANGED = (0x05);
-	private final static int CMD_ALTITUDE_CHANGED = (0x08);
-	private final static int CMD_MAX_ALTITUDE_CHANGED = (0x00);
-	private final static int CMD_VIDEO_STATE_CHANGED_V2 = (0x03);
-	private final static int CMD_MAX_VERTICAL_SPEED_CHANGED = (0x00);
-	private final static int CMD_ORIENTATION = (0x00);
+	private final static int CMD_FLYING_STATE_CHANGED = 1;
+	private final static int CMD_SPEED_CHANGED = 5;
+	private final static int CMD_ALTITUDE_CHANGED = 8;
+	private final static int CMD_MAX_ALTITUDE_CHANGED = 0;
+	private final static int CMD_VIDEO_STATE_CHANGED_V2 = 3;
+	private final static int CMD_MAX_VERTICAL_SPEED_CHANGED = 0;
+	private final static int CMD_ORIENTATION = 0;
 	
 	private NavData _navData;
 	
@@ -103,7 +103,6 @@ public class Parser {
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setPan(args);
 						}
-						
 						break;
 					default:
 						break;
@@ -171,7 +170,6 @@ public class Parser {
 				}
 				break;
 			default:
-				System.out.println("I ain't got no type. I got it!");
 				return; //Only way to get out of the loop
 			}
 			offset = offset + size;

@@ -16,6 +16,7 @@ public class NavData extends Observable{
 		_speedMax = -1;
 		_currentSpeed = -1;
 		_altitudeMax = -1;
+		_pan = -1;
 		_currentAltitude = -1;
 		_droneState = "unknown";
 		_mediaRecordState = "unknown";
