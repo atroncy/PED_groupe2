@@ -200,9 +200,22 @@ public class MessageHandler {
 	    byte[] tmp = simpleFormat.format(date).getBytes();
 	    for (int i = 0; i < 12; i++) {
 			cmd_time._arg[i] = tmp[i];
-			System.out.println(cmd_time._arg[i]);
 		}
 		return cmd_time;
+	}
+	
+	/**
+	 * 
+	 * @param arg sequence number of the packet we want to acknowledge
+	 * @param seq our sequence number
+	 * @return
+	 */
+	public static Command ack(byte arg, byte seq){
+		Command cmd_ack = new Command(TYPE_ACK, 254, seq);
+		cmd_ack._size = 8;
+		cmd_ack._arg = new byte[1];
+		cmd_ack._arg[0] = arg;
+		return cmd_ack;
 	}
 	
 	

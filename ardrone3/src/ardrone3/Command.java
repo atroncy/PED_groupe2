@@ -1,6 +1,5 @@
 package ardrone3;
 
-import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -42,6 +41,18 @@ public class Command {
 		this._cmd 		= command;
 	}
 	
+	/**
+	 * Constructor used for create ack packets.
+	 * @param type
+	 * @param id
+	 * @param seqNum
+	 */
+	public Command (byte type, int id, byte seqNum){
+		this._type		= (byte) type;
+		this._id		= (byte) id;
+		this._seq		= (byte) seqNum;
+	}
+	
 	
 	/**
 	 * Return the command in a human readable format.
@@ -59,25 +70,36 @@ public class Command {
 	 */
 	public byte[] commandToByteArray(){
 		byte[] array = new byte[this._size];
-		array[0] = this._type;
-		array[1] = this._id;
-		array[2] = this._seq;
-		byte[] size_array = intToByteArray(this._size);
-		for (int i = 0, j = 3 ; i < 4 ; i++, j++) {
-			array[j] = size_array[i];
+		if (this._type!=1){ // if the command is not an ack
+			array[0] = this._type;
+			array[1] = this._id;
+			array[2] = this._seq;
+			byte[] size_array = intToByteArray(this._size);
+			for (int i = 0, j = 3 ; i < 4 ; i++, j++) {
+				array[j] = size_array[i];
+			}
+			array[7] = this._project;
+			array[8] = this._class;
+			byte[] cmd_array = shortToByteArray(this._cmd);
+			array[9] =  cmd_array[0];
+			array[10] = cmd_array[1];
+			for (int i = 11, j = 0; i < this._size ; i++, j++) {
+				array[i] = this._arg[j];
+			}
 		}
-		array[7] = this._project;
-		array[8] = this._class;
-		byte[] cmd_array = shortToByteArray(this._cmd);
-		array[9] =  cmd_array[0];
-		array[10] = cmd_array[1];
-		for (int i = 11, j = 0; i < this._size ; i++, j++) {
-			array[i] = this._arg[j];
+		else{
+			array[0] = this._type;
+			array[1] = this._id;
+			array[2] = this._seq;
+			byte[] size_array = intToByteArray(this._size);
+			for (int i = 0, j = 3 ; i < 4 ; i++, j++) {
+				array[j] = size_array[i];
+			}
+			array[7] = this._arg[0];
 		}
-
 		return array;
 	}
-	
+
 	/**
 	 * Convert an integer into a byte array in little endian format.
 	 * @param value
