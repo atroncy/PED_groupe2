@@ -101,7 +101,7 @@ public class NavData extends Observable{
 			_mediaRecordState = "started";
 			break;
 		case 2:
-			_mediaRecordState = "notAvailable";
+			_mediaRecordState = "Not Available";
 			break;	
 		default:
 			_mediaRecordState = "unknown";

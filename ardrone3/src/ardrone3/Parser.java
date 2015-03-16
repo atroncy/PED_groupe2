@@ -119,7 +119,6 @@ public class Parser {
 			case LOW_DELAY:
 				break;
 			case DATA_WITH_ACK:
-				System.out.println("je ack");
 				project = packetAD3[offset+7];
 				switch(project){
 				case PROJECT_BEBOP:
