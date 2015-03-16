@@ -8,7 +8,7 @@ public class NavData extends Observable{
 
 	private float  _speedMax, _currentSpeed;
 	private double _altitudeMax, _currentAltitude;
-	private int _pan; // DUNNNOOOO
+	private int _pan; 
 	private String _droneState, _mediaRecordState;
 	
 	

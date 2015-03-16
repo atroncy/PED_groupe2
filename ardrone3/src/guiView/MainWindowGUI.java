@@ -47,26 +47,27 @@ public class MainWindowGUI extends JFrame{
 			KeyboardDrone k1 = new KeyboardDrone(ctrl);
 			KeyboardDrone k2 = new KeyboardDrone(ctrl2);
 			MainWindowGUI mw = new MainWindowGUI(nav1,nav2,k1,k2);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			nav1.triggerChange();
+			nav2.triggerChange();
+			
+			
+			Parser p1 = new Parser(nav1,ctrl);
+			ServerUDP s1 = new ServerUDP(p1,43210);
+			s1.start();
 		} catch (UnknownHostException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	
 
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		nav1.triggerChange();
-		nav2.triggerChange();
-		
-		
-		Parser p1 = new Parser(nav1);
-		ServerUDP s1 = new ServerUDP(p1,43210);
-		s1.start();
+
 	}
 }

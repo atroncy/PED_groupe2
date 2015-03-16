@@ -36,15 +36,17 @@ public class Parser {
 	private final static int CMD_ORIENTATION = 0;
 	
 	private NavData _navData;
+	private Controller _ctrl;
 	
-	public Parser(NavData navData){
+	public Parser(NavData navData, Controller ctrl){
 		_navData = navData;
+		_ctrl = ctrl;
 	}
 	
 	public void parse(byte [] packetAD3){
 		
 		int packetRemain = packetAD3.length;
-		int size = 0, offset = 0, type = 0, project = 0,classs = 0, cmd = 0;
+		int size = 0, offset = 0, type = 0, project = 0,classs = 0, cmd = 0, seq = 0;
 		ByteBuffer sizeDecoder = null, args = null;
 
 		//Parse all the ArDrone3 message included in the packet and search for ArCommands needed for NavData 
@@ -122,6 +124,7 @@ public class Parser {
 				case PROJECT_BEBOP:
 					classs = packetAD3[offset+8];
 					cmd = packetAD3[offset+9];
+					seq = packetAD3[offset+2];
 					switch(classs){
 					case CLASS_PILOTING_STATE:
 						switch(cmd){
@@ -164,8 +167,10 @@ public class Parser {
 					}
 					break;
 				case PROJECT_COMMON:
+					seq = packetAD3[offset+2];
 					break;
 				default:
+					seq = packetAD3[offset+2];
 					break;
 				}
 				break;
