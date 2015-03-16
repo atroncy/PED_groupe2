@@ -24,6 +24,7 @@ public class Parser {
 	private final static int CLASS_PILOTING_SETTING_STATE = (0x06);
 	private final static int CLASS_MEDIA_RECORD_STATE = (0x08);
 	private final static int CLASS_SPEED_SETTING_STATE = (0x0c);
+	private final static int CLASS_CAMERA_STATE = (0x25);
 	
 	//cmd 
 	private final static int CMD_FLYING_STATE_CHANGED = (0x01);
@@ -32,6 +33,7 @@ public class Parser {
 	private final static int CMD_MAX_ALTITUDE_CHANGED = (0x00);
 	private final static int CMD_VIDEO_STATE_CHANGED_V2 = (0x03);
 	private final static int CMD_MAX_VERTICAL_SPEED_CHANGED = (0x00);
+	private final static int CMD_ORIENTATION = (0x00);
 	
 	private NavData _navData;
 	
@@ -95,6 +97,13 @@ public class Parser {
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setSpeedMax(args);
 						}
+						break;
+					case CLASS_CAMERA_STATE:
+						if(cmd == CMD_ORIENTATION){
+							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
+							_navData.setPan(args);
+						}
+						
 						break;
 					default:
 						break;

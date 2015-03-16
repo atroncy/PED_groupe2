@@ -8,7 +8,7 @@ public class NavData extends Observable{
 
 	private float  _speedMax, _currentSpeed;
 	private double _altitudeMax, _currentAltitude;
-	private int _Pan; // DUNNNOOOO
+	private int _pan; // DUNNNOOOO
 	private String _droneState, _mediaRecordState;
 	
 	
@@ -113,6 +113,16 @@ public class NavData extends Observable{
 		return _mediaRecordState;
 	}
 	
+	public void setPan(ByteBuffer args){
+		args.position(11+1);
+		_pan = this.byteToi8(args);
+		this.triggerChange();
+	}
+	
+	public int getPan(){
+		return _pan;
+	}
+	
 	private double ieee754ToDouble(ByteBuffer args){
 		long holder = 0;
 		args.order(ByteOrder.LITTLE_ENDIAN);
@@ -132,6 +142,12 @@ public class NavData extends Observable{
 		return args.getInt();
 	}
 	
+	private int byteToi8(ByteBuffer args){
+		int holder = 0;
+		args.order(ByteOrder.LITTLE_ENDIAN);
+		holder = args.get();
+		return holder;
+	}
 	
 	//TODO private later or not ?
 	public void triggerChange(){
