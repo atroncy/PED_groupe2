@@ -26,7 +26,6 @@ public class ServerUDP extends Thread{
 				serverSocket.receive(receivePacket);
 				
 				byte packetAD3[] = receivePacket.getData();
-				System.out.println(receiveData[24]);
 				_parser.parse(packetAD3);
 			
 			}
