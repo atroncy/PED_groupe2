@@ -31,7 +31,7 @@ public class Controller {
 			Socket socketTCP = new Socket (this._ip, 44444);
 
 			PrintWriter out = new PrintWriter (socketTCP.getOutputStream(), true);
-			out.println ("{'controller_name':'"+controlerName+"','controller_type':'"+
+			out.print ("{'controller_name':'"+controlerName+"','controller_type':'"+
 					controlerName+"','d2c_port':"+this._port+"}");
 
 			Thread.sleep(1000);
