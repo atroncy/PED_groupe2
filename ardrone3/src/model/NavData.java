@@ -8,7 +8,7 @@ public class NavData extends Observable{
 
 	private float  _speedMax, _currentSpeed;
 	private double _altitudeMax, _currentAltitude;
-	private int _pan; 
+	private int _pan; // DUNNNOOOO
 	private String _droneState, _mediaRecordState;
 	
 	
@@ -98,10 +98,10 @@ public class NavData extends Observable{
 			_mediaRecordState = "stopped";
 			break;
 		case 1:
-			_mediaRecordState = "stopped";
+			_mediaRecordState = "started";
 			break;
 		case 2:
-			_mediaRecordState = "stopped";
+			_mediaRecordState = "notAvailable";
 			break;	
 		default:
 			_mediaRecordState = "unknown";

@@ -119,6 +119,7 @@ public class Parser {
 			case LOW_DELAY:
 				break;
 			case DATA_WITH_ACK:
+				System.out.println("je ack");
 				project = packetAD3[offset+7];
 				switch(project){
 				case PROJECT_BEBOP:
@@ -131,16 +132,24 @@ public class Parser {
 						case CMD_FLYING_STATE_CHANGED:
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setDroneState(args);
+							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.incSeqAck();
 							break;
 						case CMD_SPEED_CHANGED:
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
-							_navData.setCurrentSpeed(args);							
+							_navData.setCurrentSpeed(args);
+							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.incSeqAck();
 							break;
 						case CMD_ALTITUDE_CHANGED:
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setCurrentAltitude(args);
+							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.incSeqAck();
 							break;
 						default:
+							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.incSeqAck();
 							break;
 						}
 						break;
@@ -149,28 +158,40 @@ public class Parser {
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setAltitudeMax(args);
 						}
+						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.incSeqAck();
 						break;
 					case CLASS_MEDIA_RECORD_STATE:
 						if(cmd == CMD_VIDEO_STATE_CHANGED_V2){
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setMediaRecordState(args);
 						}
+						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.incSeqAck();
 						break;
 					case CLASS_SPEED_SETTING_STATE:
 						if(cmd == CMD_MAX_VERTICAL_SPEED_CHANGED){
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setSpeedMax(args);
 						}
+						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.incSeqAck();
 						break;
 					default:
+						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.incSeqAck();
 						break;
 					}
 					break;
 				case PROJECT_COMMON:
 					seq = packetAD3[offset+2];
+					_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+					_ctrl.incSeqAck();
 					break;
 				default:
 					seq = packetAD3[offset+2];
+					_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+					_ctrl.incSeqAck();
 					break;
 				}
 				break;
