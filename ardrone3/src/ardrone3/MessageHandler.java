@@ -120,6 +120,7 @@ public class MessageHandler {
 	
 	/**
 	 * Change the camera's orientation. Value is in degree.
+	 * Negative values to turn the camera on the left, positive to turn on the right.
 	 * @param value
 	 * @param seq
 	 * @return
@@ -151,6 +152,7 @@ public class MessageHandler {
 	
 	}
 	
+
 	/**
 	 * 
 	 * @param seq
