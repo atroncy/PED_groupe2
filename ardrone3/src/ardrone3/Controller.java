@@ -14,7 +14,8 @@ public class Controller {
 	private int _port;
 
 	private byte _seqData 		= 0;
-	private byte _seqDataAck		= 0;
+	private byte _seqDataAck	= 0;
+	private byte _seqAck		= 0;
 
 	private DatagramSocket _socketUDP;
 	private DatagramPacket _packet;
@@ -78,6 +79,13 @@ public class Controller {
 		this._seqDataAck++;
 	}
 
+	public byte getSeqAck() {
+		return _seqAck;
+	}
+
+	public void incSeqAck() {
+		this._seqAck++;
+	}
 
 
 

@@ -96,10 +96,10 @@ public class DroneReceivePanel extends JPanel implements Observer{
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		_tfSettedAltitude.setText(String.valueOf(_nav.getAltitudeMax()));
-		//_tfSettedPanAngle.setText();
+		_tfSettedPanAngle.setText(String.valueOf(_nav.getPan()));
 		_tfSettedSpeed.setText(String.valueOf(_nav.getSpeedMax()));
 		_tfCurrentAltitude.setText(String.valueOf(_nav.getCurrentAltitude()));
-		//_tfCurrentPanAngle.setText();
+		_tfCurrentPanAngle.setText(String.valueOf(_nav.getPan()));
 		_tfCurrentSpeed.setText(String.valueOf(_nav.getCurrentSpeed()));
 		_tfCurrentState.setText(_nav.getDroneState());
 		_tfCurrentMedia.setText(_nav.getMediaRecordState());

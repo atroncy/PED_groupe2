@@ -27,7 +27,7 @@ public class MouseUser implements MouseListener{
 			System.out.println("We won't stop, everybody move");
 			//stuff
 		else if (source == _b3)
-			System.out.println("I had like to propose a toast, i said toast motherf****");
+			System.out.println("LA VIDEO ICI");
 			//stuff
 		
 	}
