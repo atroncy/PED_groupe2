@@ -156,8 +156,8 @@ public class Automatic extends Thread implements Observer{
 		
 		return false;
 	}
+	
 
-//	aint that good
 	private void phaseFlying() throws InvalidArgumentException{
 		do{
 			_ctrl1.sendMessage(_mh1.gaz((byte) 50, _ctrl1.getSeqData()));

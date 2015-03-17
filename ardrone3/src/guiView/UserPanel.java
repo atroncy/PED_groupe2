@@ -11,25 +11,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import systeme_de_drone_de_facade.Automatic;
+
 public class UserPanel extends JPanel{
 
-	private JTextField _tfAltitude, _tfPanAngle, _tfSpeed;
-	private JButton _launch, _stop, _video;
 
 	
-	public UserPanel(){
+	public UserPanel(Automatic auto){
 		
 		this.setLayout(new BorderLayout());
 		
 		JLabel labelAltitude = new JLabel("Altitude Max");
 		JLabel labelPanAngle = new JLabel("Panning");
 		JLabel labelSpeed = new JLabel("Vertical Speed");
-		_tfAltitude = new JTextField(3);
-		_tfPanAngle = new JTextField();
-		_tfSpeed = new JTextField();
-		_launch = new JButton("Launch");
-		_stop = new JButton("STOPEU");
-		_video = new JButton("Video");
+		JTextField tfAltitude = new JTextField();
+		JTextField tfPanAngle = new JTextField();
+		JTextField tfSpeed = new JTextField();
+		JButton launch = new JButton("Launch");
+		JButton stop = new JButton("STOPEU");
+		JButton video = new JButton("Video");
 		
 		
 		Box left = Box.createVerticalBox();
@@ -51,11 +51,11 @@ public class UserPanel extends JPanel{
 		filler3.add(Box.createHorizontalStrut(50));
 		
 		right.add(Box.createVerticalStrut(40));
-		right.add(_tfAltitude);
+		right.add(tfAltitude);
 		right.add(Box.createVerticalStrut(30));
-		right.add(_tfPanAngle);
+		right.add(tfPanAngle);
 		right.add(Box.createVerticalStrut(30));
-		right.add(_tfSpeed);
+		right.add(tfSpeed);
 		right.add(Box.createVerticalStrut(40));
 		
 		oui.add(filler);
@@ -63,18 +63,20 @@ public class UserPanel extends JPanel{
 		oui.add(filler2);
 		oui.add(right);
 		oui.add(filler3);
-		bot.add(_launch);
-		bot.add(_stop);
-		bot.add(_video);
+		bot.add(launch);
+		bot.add(stop);
+		bot.add(video);
 		
-		MouseUser m = new MouseUser(_launch,_stop,_video);
+		MouseUser m = new MouseUser(launch, stop, video,tfPanAngle,tfAltitude,tfSpeed, auto);
 		
-		_launch.addMouseListener(m);
-		_stop.addMouseListener(m);
-		_video.addMouseListener(m);
+		launch.addMouseListener(m);
+		stop.addMouseListener(m);
+		video.addMouseListener(m);
 		this.add(oui,BorderLayout.CENTER);
 		this.add(bot,BorderLayout.SOUTH);
 		
 	}
+	
+	 
 	
 }
