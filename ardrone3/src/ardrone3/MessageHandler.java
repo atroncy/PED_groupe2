@@ -15,7 +15,6 @@ public class MessageHandler {
 	//type
 	private final static byte TYPE_ACK 					= 1;
 	private final static byte TYPE_DATA 				= 2;
-	private final static byte TYPE_DATA_LOW_LATTENCY 	= 3;
 	private final static byte TYPE_DATA_WITH_ACK		= 4;
 	
 	//****** project BEBOP ******
@@ -35,10 +34,6 @@ public class MessageHandler {
 	private final static byte CAMERA 		= 1;
 	//command CAMERA
 	private final static short ORIENTATION 	= 0;
-	//arg CAMERA
-	private final static byte PAN 			= 1;
-	/*Pan camera consign for the drone (in degree).The value is saturated by the drone.
-	Saturation value is sent by the drone through CameraSettingsChanged command. */
 	
 	
 	//droneClass MEDIARECORD
@@ -48,6 +43,23 @@ public class MessageHandler {
 	//arg MEDIARECORD
 	private final static int REC_STOP	= 0;
 	private final static int REC_START	= 1;
+	
+	
+	//To set max altitude
+	//droneClass PILOTING_SETTINGS
+	private final static byte PILOTING_SETTINGS	= 2;
+	//command PILOTING_SETTINGS
+	private final static byte MAX_ALTITUDE		= 0;
+
+	//To set max vertical speed
+	//droneClass SPEED_SETTINGS
+	private final static byte SPEED_SETTINGS	= 11;
+	//command SPEED_SETTINGS
+	private final static byte MAX_VERTICAL_SPEED= 0;
+
+
+	
+	
 	
 	
 	//****** project COMMON ******
@@ -156,35 +168,50 @@ public class MessageHandler {
 	}
 	
 	/**
-	 * 
+	 * The application FreeFlight3 seems to use the depreciated method, so do we... note the mass storage id = 0.
 	 * @param seq
 	 * @return
 	 */
 	public Command recordStart(byte seq){
 		Command cmd_rec = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, MEDIA_RECORD, VIDEO);
-		cmd_rec._size = 15;
+		cmd_rec._size = 16;
 		_cm.addText("start recording");
-		cmd_rec._arg = Command.intToByteArray(REC_START);
+		byte [] tmp = Command.intToByteArray(REC_START);
+		cmd_rec._arg = new byte [cmd_rec._size - 11];
+		for (int i = 0; i < 4; i++) {
+			cmd_rec._arg[i] = tmp[i];
+		}
+		cmd_rec._arg[4] = 0; // Mass storage id to record, we don't care.
+		
 		return cmd_rec;
-	
 	}
 	
 
 	/**
-	 * 
+	 * The application FreeFlight3 seems to use the depreciated method, so do we... note the mass storage id = 0.
 	 * @param seq
 	 * @return
 	 */
 	public Command recordStop(byte seq){
 		Command cmd_rec = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, MEDIA_RECORD, VIDEO);
-		cmd_rec._size = 15;
-		_cm.addText("stop recording");
-		cmd_rec._arg = Command.intToByteArray(REC_STOP);
+		cmd_rec._size = 16;
+		//_cm.addText("stop recording");
+		byte [] tmp = Command.intToByteArray(REC_STOP);
+		cmd_rec._arg = new byte [cmd_rec._size - 11];
+		for (int i = 0; i < 4; i++) {
+			cmd_rec._arg[i] = tmp[i];
+		}
+		cmd_rec._arg[4] = 0; // Mass storage id to record, we don't care.
+		
 		return cmd_rec;
-			
 	}
 	
 	
+	/**
+	 * Set the current date, apparently needed to record videos.
+	 * @param seq
+	 * @return
+	 */
 	public Command setCurrentDate(byte seq){
 		Command cmd_date = new Command(TYPE_DATA_WITH_ACK, 11, seq, COMMON_PROJECT, COMMON_CLASS, SET_CURRENT_DATE);
 		cmd_date._size = 22;
@@ -200,6 +227,12 @@ public class MessageHandler {
 		return cmd_date;
 	}
 
+	
+	/**
+	 * Set the current time, apparently needed to record videos.
+	 * @param seq
+	 * @return
+	 */
 	public Command setCurrentTime(byte seq){
 		Command cmd_time = new Command(TYPE_DATA_WITH_ACK, 11, seq, COMMON_PROJECT, COMMON_CLASS, SET_CURRENT_TIME);
 		cmd_time._size = 24;
@@ -216,7 +249,7 @@ public class MessageHandler {
 	}
 	
 	/**
-	 * 
+	 * Used to create acknowledgment messages.
 	 * @param arg sequence number of the packet we want to acknowledge
 	 * @param seq our sequence number
 	 * @return
@@ -229,8 +262,34 @@ public class MessageHandler {
 		return cmd_ack;
 	}
 	
+	/**
+	 * Set the maximal altitude, in meters.
+	 * @param maxAlt altitude max in m.
+	 * @param seq
+	 * @return
+	 */
+	public Command setMaxAltitude(float maxAlt, byte seq){
+		Command cmd_max = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, PILOTING_SETTINGS, MAX_ALTITUDE);
+		cmd_max._size = 15;
+		cmd_max._arg = new byte[cmd_max._size - 11];
+		cmd_max._arg = Command.floatToIeee754(maxAlt);
+		
+		return cmd_max;
+	}
 	
-	//TODO set vitesse + altitude
-	
+	/**
+	 * Set the maximal vertical speed.
+	 * @param maxSpeed max vertical speed in m/s.
+	 * @param seq
+	 * @return
+	 */
+	public Command setMaxSpeed(float maxSpeed, byte seq){
+		Command cmd_max = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, SPEED_SETTINGS, MAX_VERTICAL_SPEED);
+		cmd_max._size = 15;
+		cmd_max._arg = new byte[cmd_max._size - 11];
+		cmd_max._arg = Command.floatToIeee754(maxSpeed);
+		
+		return cmd_max;
+	}
 	
 }

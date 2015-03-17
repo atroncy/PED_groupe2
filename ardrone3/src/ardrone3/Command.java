@@ -125,7 +125,7 @@ public class Command {
 	}
 	
 
-	public byte[] doubleToIeee754 (double value){
+	public static byte[] doubleToIeee754 (double value){
 		long holder = 0;
 		holder = Double.doubleToRawLongBits(value);
 		ByteBuffer buffer = ByteBuffer.allocate(Long.SIZE);
@@ -135,7 +135,7 @@ public class Command {
 		return buffer.array();
 	}
 	
-	public byte[] floatToIeee754 (float value){
+	public static byte[] floatToIeee754 (float value){
 		int holder = 0;
 		holder = Float.floatToRawIntBits(value);
 		ByteBuffer buffer = ByteBuffer.allocate(Integer.SIZE);

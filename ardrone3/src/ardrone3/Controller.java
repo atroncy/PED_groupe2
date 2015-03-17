@@ -52,9 +52,8 @@ public class Controller {
 		return 1;
 	}
 
-	public synchronized void sendMessage(Command cmd){
+	public void sendMessage(Command cmd){
 		byte[] cmdToSend = cmd.commandToByteArray();
-		System.out.println(cmd);
 		_packet = new DatagramPacket(cmdToSend, cmdToSend.length, this._ip, 54321);
 		try {
 			_socketUDP.send(_packet);
