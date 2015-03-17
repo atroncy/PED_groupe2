@@ -50,7 +50,7 @@ public class MainWindowGUI extends JFrame{
 			Controller ctrl2 = new Controller("192.168.42.8", 43211);
 			MessageHandler mh1 = new MessageHandler(cm1);
 			MessageHandler mh2 = new MessageHandler(cm2);
-		//	ctrl1.init("Drone_Uno");
+			ctrl1.init("Drone_Uno");
 			KeyboardDrone k1 = new KeyboardDrone(ctrl1,mh1);
 			KeyboardDrone k2 = new KeyboardDrone(ctrl2,mh2);
 			Automatic auto = new Automatic(nav1, nav1, ctrl1, ctrl2, mh1, mh2);
