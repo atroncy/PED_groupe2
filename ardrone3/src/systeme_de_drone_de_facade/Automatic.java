@@ -95,22 +95,24 @@ public class Automatic extends Thread implements Observer{
 	}
 
 	private int phaseConfig() throws InvalidArgumentException, InterruptedException{
+//		pan
 		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
 		_ctrl1.incSeqDataAck();
 		_ctrl2.sendMessage(_mh2.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
 		_ctrl2.incSeqDataAck();
 		
 		
-//		speed			
-//		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
-//		_ctrl1.incSeqDataAck();
-//		_ctrl2.sendMessage(_mh2.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
-//		_ctrl2.incSeqDataAck();
 //		altitude
-//		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
-//		_ctrl1.incSeqDataAck();
-//		_ctrl2.sendMessage(_mh2.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
-//		_ctrl2.incSeqDataAck();
+		_ctrl1.sendMessage(_mh1.setMaxAltitude((byte) _userAltitude, _ctrl1.getSeqDataAck()));
+		_ctrl1.incSeqDataAck();
+		_ctrl2.sendMessage(_mh2.cameraPan((byte) _userAltitude, _ctrl2.getSeqDataAck()));
+		_ctrl2.incSeqDataAck();
+		
+//		speed
+		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userSpeed, _ctrl1.getSeqDataAck()));
+		_ctrl1.incSeqDataAck();
+		_ctrl2.sendMessage(_mh2.cameraPan((byte) _userSpeed, _ctrl2.getSeqDataAck()));
+		_ctrl2.incSeqDataAck();
 		
 		
 		boolean check = false;
