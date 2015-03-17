@@ -21,7 +21,11 @@ public class NavData extends Observable{
 		_droneState = "unknown";
 		_mediaRecordState = "unknown";
 	}
-			
+	
+	/**
+	 * Parse the arguments of the seted max vertical speed
+	 * @param args
+	 */
 	public void setSpeedMax(ByteBuffer args){
 		_speedMax = this.ieee754ToFloat(args);
 		this.triggerChange();
@@ -30,7 +34,11 @@ public class NavData extends Observable{
 	public float getSpeedMax(){
 		return _speedMax;
 	}
-		
+	/**
+	 * Parse the arguments of the current speed of the drone and 
+	 * search for the vertical one
+	 * @param args
+	 */
 	public void setCurrentSpeed(ByteBuffer args){
 		args.position(11+8);
 		_currentSpeed = this.ieee754ToFloat(args);
@@ -40,7 +48,11 @@ public class NavData extends Observable{
 	public float getCurrentSpeed(){
 		return _currentSpeed;
 	}
-		
+	
+	/**
+	 * Parse the arguments of the current altitude
+	 * @param args
+	 */
 	public void setCurrentAltitude(ByteBuffer args){
 		_currentAltitude = this.ieee754ToDouble(args);
 		this.triggerChange();
@@ -50,6 +62,10 @@ public class NavData extends Observable{
 		return _currentAltitude;
 	}
 	
+	/**
+	 * Parse the arguments of the setted max altitude
+	 * @param args
+	 */
 	public void setAltitudeMax(ByteBuffer args){
 		_altitudeMax = this.ieee754ToDouble(args);
 		this.triggerChange();
@@ -58,7 +74,11 @@ public class NavData extends Observable{
 	public double getAltitudeMax(){
 		return _altitudeMax;
 	}
-		
+	
+	/**
+	 * Parse the arguments of the drone states
+	 * @param args
+	 */
 	public void setDroneState(ByteBuffer args){
 		int flag = this.enumToInt(args);
 		switch(flag){
@@ -91,6 +111,10 @@ public class NavData extends Observable{
 		return _droneState;
 	}
 	
+	/**
+	 * Parse the arguments of the media recording states
+	 * @param args
+	 */
 	public void setMediaRecordState(ByteBuffer args){
 		int flag = this.enumToInt(args);
 		switch(flag){
@@ -114,6 +138,10 @@ public class NavData extends Observable{
 		return _mediaRecordState;
 	}
 	
+	/**
+	 * Parse the arguments of the current pan angle
+	 * @param args
+	 */
 	public void setPan(ByteBuffer args){
 		args.position(11+1);
 		_pan = this.byteToi8(args);
@@ -124,6 +152,12 @@ public class NavData extends Observable{
 		return _pan;
 	}
 	
+	/**
+	 * This function take a ByteBuffer set his order to little_endian
+	 * and cast the ieee754 arguments to a double
+	 * @param args
+	 * @return 
+	 */
 	private double ieee754ToDouble(ByteBuffer args){
 		long holder = 0;
 		args.order(ByteOrder.LITTLE_ENDIAN);
@@ -131,6 +165,12 @@ public class NavData extends Observable{
 		return Double.longBitsToDouble(holder);
 	}
 	
+	/**
+	 * This function take a ByteBuffer set his order to little_endian
+	 * and cast the ieee754 arguments to a float		
+	 * @param args
+	 * @return
+	 */
 	private float ieee754ToFloat(ByteBuffer args){
 		int holder = 0;
 		args.order(ByteOrder.LITTLE_ENDIAN);
@@ -138,11 +178,23 @@ public class NavData extends Observable{
 		return Float.intBitsToFloat(holder);
 	}
 	
+	
+	/**
+	 * This function take a ByteBuffer set his order to little_endian
+	 * @param args
+	 * @return
+	 */
 	private int enumToInt(ByteBuffer args){
 		args.order(ByteOrder.LITTLE_ENDIAN);
 		return args.getInt();
 	}
 	
+	/**
+	 * This functions take a ByteBuffer set his order to little_endian
+	 * and cast the byte to a int
+	 * @param args
+	 * @return
+	 */
 	private int byteToi8(ByteBuffer args){
 		int holder = 0;
 		args.order(ByteOrder.LITTLE_ENDIAN);

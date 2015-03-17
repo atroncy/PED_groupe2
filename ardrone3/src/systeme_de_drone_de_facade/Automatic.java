@@ -39,7 +39,9 @@ public class Automatic extends Thread implements Observer{
 		_nav2.addObserver(this);
 	}
 	
-	
+	/**
+	 * Start the automatic process of the recording of the facade
+	 */
 	@Override
 	public void run() {
 		
@@ -67,7 +69,11 @@ public class Automatic extends Thread implements Observer{
 	}
 
 
-
+	/**
+	 * Start the takeoff phase and check if the drone is hovering
+	 * @return
+	 * @throws InterruptedException
+	 */
 	private int phaseTakeoff() throws InterruptedException{
 		
 		_ctrl1.sendMessage(_mh1.takeoff(_ctrl1.getSeqDataAck()));
@@ -93,7 +99,13 @@ public class Automatic extends Thread implements Observer{
 		
 		return false;
 	}
-
+	
+	/**
+	 * Start the configuration phase and check if all user parameters are setted
+	 * @return
+	 * @throws InvalidArgumentException
+	 * @throws InterruptedException
+	 */
 	private int phaseConfig() throws InvalidArgumentException, InterruptedException{
 //		pan
 		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
@@ -123,6 +135,7 @@ public class Automatic extends Thread implements Observer{
 		return 1;
 	}
 	
+	
 	private boolean checkConfigDone() throws InterruptedException {
 		if(_pan1 == _userPan && _pan2 == - _userPan 
 			&& _speedMax1 == _userSpeed && _speedMax2 == _userSpeed
@@ -134,7 +147,11 @@ public class Automatic extends Thread implements Observer{
 		return false;
 	}
 
-
+	/**
+	 * Start the media phase and check if the recording is started
+	 * @return
+	 * @throws InterruptedException
+	 */
 	private int phaseMediaStarted() throws InterruptedException {
 		_ctrl1.sendMessage(_mh1.recordStart(_ctrl1.getSeqDataAck()));
 		_ctrl1.incSeqDataAck();
@@ -159,7 +176,10 @@ public class Automatic extends Thread implements Observer{
 		return false;
 	}
 	
-
+	/**
+	 * Start the flying phase sending gaz up until the max altitude is reach
+	 * @throws InvalidArgumentException
+	 */
 	private void phaseFlying() throws InvalidArgumentException{
 		do{
 			_ctrl1.sendMessage(_mh1.gaz((byte) 50, _ctrl1.getSeqData()));
@@ -170,7 +190,11 @@ public class Automatic extends Thread implements Observer{
 		
 	}
 
-
+	/**
+	 * Start the media phase and check if the recording is stopped
+	 * @return
+	 * @throws InterruptedException
+	 */
 	private int phaseMediaStoped() throws InterruptedException {
 		_ctrl1.sendMessage(_mh1.recordStop(_ctrl1.getSeqDataAck()));
 		_ctrl1.incSeqDataAck();
