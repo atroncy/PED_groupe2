@@ -17,14 +17,17 @@ public class Automatic extends Thread implements Observer{
 	private double _altitudeMax1, _currentAltitude1, _altitudeMax2, _currentAltitude2, _userAltitude;
 	private int _pan1, _pan2, _userPan; 
 	private String _droneState1, _mediaRecordState1, _droneState2, _mediaRecordState2;
+	private MessageHandler _mh1, _mh2;
 	
 	
 	
-	public Automatic(NavData nav1, NavData nav2, Controller ctrl1, Controller ctrl2){
+	public Automatic(NavData nav1, NavData nav2, Controller ctrl1, Controller ctrl2, MessageHandler mh1, MessageHandler mh2){
 		_nav1 = nav1;
 		_nav2 = nav2;
 		_ctrl1 = ctrl1;
 		_ctrl2 = ctrl2;
+		_mh1 = mh1;
+		_mh2 = mh2;
 	}
 	
 	
@@ -67,9 +70,9 @@ public class Automatic extends Thread implements Observer{
 
 	private int phaseTakeoff() throws InterruptedException{
 		
-		_ctrl1.sendMessage(MessageHandler.takeoff(_ctrl1.getSeqDataAck()));
+		_ctrl1.sendMessage(_mh1.takeoff(_ctrl1.getSeqDataAck()));
 		_ctrl1.incSeqDataAck();
-		_ctrl2.sendMessage(MessageHandler.takeoff(_ctrl2.getSeqDataAck()));
+		_ctrl2.sendMessage(_mh2.takeoff(_ctrl2.getSeqDataAck()));
 		_ctrl2.incSeqDataAck();
 		
 		Automatic.sleep(1000);
@@ -92,21 +95,21 @@ public class Automatic extends Thread implements Observer{
 	}
 
 	private int phaseConfig() throws InvalidArgumentException, InterruptedException{
-		_ctrl1.sendMessage(MessageHandler.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
+		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
 		_ctrl1.incSeqDataAck();
-		_ctrl2.sendMessage(MessageHandler.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
+		_ctrl2.sendMessage(_mh2.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
 		_ctrl2.incSeqDataAck();
 		
 		
 //		speed			
-//		_ctrl1.sendMessage(MessageHandler.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
+//		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
 //		_ctrl1.incSeqDataAck();
-//		_ctrl2.sendMessage(MessageHandler.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
+//		_ctrl2.sendMessage(_mh2.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
 //		_ctrl2.incSeqDataAck();
 //		altitude
-//		_ctrl1.sendMessage(MessageHandler.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
+//		_ctrl1.sendMessage(_mh1.cameraPan((byte) _userPan, _ctrl1.getSeqDataAck()));
 //		_ctrl1.incSeqDataAck();
-//		_ctrl2.sendMessage(MessageHandler.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
+//		_ctrl2.sendMessage(_mh2.cameraPan((byte) - _userPan, _ctrl2.getSeqDataAck()));
 //		_ctrl2.incSeqDataAck();
 		
 		
@@ -131,9 +134,9 @@ public class Automatic extends Thread implements Observer{
 
 
 	private int phaseMediaStarted() throws InterruptedException {
-		_ctrl1.sendMessage(MessageHandler.recordStart(_ctrl1.getSeqDataAck()));
+		_ctrl1.sendMessage(_mh1.recordStart(_ctrl1.getSeqDataAck()));
 		_ctrl1.incSeqDataAck();
-		_ctrl2.sendMessage(MessageHandler.recordStart(_ctrl2.getSeqDataAck()));
+		_ctrl2.sendMessage(_mh2.recordStart(_ctrl2.getSeqDataAck()));
 		_ctrl2.incSeqDataAck();
 		
 		boolean check = false;
@@ -157,9 +160,9 @@ public class Automatic extends Thread implements Observer{
 //	aint that good
 	private void phaseFlying() throws InvalidArgumentException{
 		do{
-			_ctrl1.sendMessage(MessageHandler.gaz((byte) 50, _ctrl1.getSeqData()));
+			_ctrl1.sendMessage(_mh1.gaz((byte) 50, _ctrl1.getSeqData()));
 			_ctrl1.incSeqData();
-			_ctrl2.sendMessage(MessageHandler.gaz((byte) 50, _ctrl2.getSeqData()));
+			_ctrl2.sendMessage(_mh2.gaz((byte) 50, _ctrl2.getSeqData()));
 			_ctrl2.incSeqData();
 		}while(_currentAltitude1 < _userAltitude && _currentAltitude2 < _userAltitude);
 		
@@ -167,9 +170,9 @@ public class Automatic extends Thread implements Observer{
 
 
 	private int phaseMediaStoped() throws InterruptedException {
-		_ctrl1.sendMessage(MessageHandler.recordStop(_ctrl1.getSeqDataAck()));
+		_ctrl1.sendMessage(_mh1.recordStop(_ctrl1.getSeqDataAck()));
 		_ctrl1.incSeqDataAck();
-		_ctrl2.sendMessage(MessageHandler.recordStop(_ctrl2.getSeqDataAck()));
+		_ctrl2.sendMessage(_mh2.recordStop(_ctrl2.getSeqDataAck()));
 		_ctrl2.incSeqDataAck();
 		
 		boolean check = false;

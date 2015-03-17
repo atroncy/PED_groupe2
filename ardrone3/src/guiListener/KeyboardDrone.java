@@ -11,9 +11,11 @@ import ardrone3.MessageHandler;
 public class KeyboardDrone implements KeyListener{
 
  	private Controller _c;
+	private MessageHandler _mh;
 	
-	public KeyboardDrone(Controller c){
+	public KeyboardDrone(Controller c, MessageHandler mh){
 		_c = c;	
+		_mh = mh;
 	}
 
 	
@@ -21,17 +23,17 @@ public class KeyboardDrone implements KeyListener{
 		switch(key){
 		case KeyEvent.VK_UP:
 			System.out.println("UP key pressed");
-			_c.sendMessage(MessageHandler.takeoff(_c.getSeqDataAck()));
+			_c.sendMessage(_mh.takeoff(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			break;
 		case KeyEvent.VK_DOWN:
 			System.out.println("DOWN key pressed");
-			_c.sendMessage(MessageHandler.landing(_c.getSeqDataAck()));
+			_c.sendMessage(_mh.landing(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			break;
 		case KeyEvent.VK_A:
 			System.out.println("A pressed : set time and date");
-			_c.sendMessage(MessageHandler.setCurrentDate(_c.getSeqDataAck()));
+			_c.sendMessage(_mh.setCurrentDate(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			try {
 				Thread.sleep(100);
@@ -39,23 +41,23 @@ public class KeyboardDrone implements KeyListener{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			_c.sendMessage(MessageHandler.setCurrentTime(_c.getSeqDataAck()));
+			_c.sendMessage(_mh.setCurrentTime(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			break;
 		case KeyEvent.VK_Z:
 			System.out.println("Z pressed : start recording");
-			_c.sendMessage(MessageHandler.recordStart(_c.getSeqDataAck()));
+			_c.sendMessage(_mh.recordStart(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			break;
 		case KeyEvent.VK_E:
 			System.out.println("E pressed : stop recording");
-			_c.sendMessage(MessageHandler.recordStop(_c.getSeqDataAck()));
+			_c.sendMessage(_mh.recordStop(_c.getSeqDataAck()));
 			_c.incSeqDataAck();
 			break;
 		case KeyEvent.VK_RIGHT:
 			System.out.println("RIGHT pressed : turn camera to the right");
 			try {
-				_c.sendMessage(MessageHandler.cameraPan((byte)5,_c.getSeqDataAck()));
+				_c.sendMessage(_mh.cameraPan((byte)5,_c.getSeqDataAck()));
 			} catch (InvalidArgumentException e) {
 				e.printStackTrace();
 			}
@@ -64,7 +66,7 @@ public class KeyboardDrone implements KeyListener{
 		case KeyEvent.VK_LEFT:
 			System.out.println("LEFT pressed : turn camera to the left");
 			try {
-				_c.sendMessage(MessageHandler.cameraPan((byte)-5,_c.getSeqDataAck()));
+				_c.sendMessage(_mh.cameraPan((byte)-5,_c.getSeqDataAck()));
 			} catch (InvalidArgumentException e) {
 				e.printStackTrace();
 			}

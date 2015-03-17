@@ -37,10 +37,12 @@ public class Parser {
 	
 	private NavData _navData;
 	private Controller _ctrl;
+	private MessageHandler _mh;
 	
-	public Parser(NavData navData, Controller ctrl){
+	public Parser(NavData navData, Controller ctrl, MessageHandler mh){
 		_navData = navData;
 		_ctrl = ctrl;
+		_mh = mh;
 	}
 	
 	public void parse(byte [] packetAD3){
@@ -131,23 +133,23 @@ public class Parser {
 						case CMD_FLYING_STATE_CHANGED:
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setDroneState(args);
-							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 							_ctrl.incSeqAck();
 							break;
 						case CMD_SPEED_CHANGED:
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setCurrentSpeed(args);
-							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 							_ctrl.incSeqAck();
 							break;
 						case CMD_ALTITUDE_CHANGED:
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setCurrentAltitude(args);
-							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 							_ctrl.incSeqAck();
 							break;
 						default:
-							_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+							_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 							_ctrl.incSeqAck();
 							break;
 						}
@@ -157,7 +159,7 @@ public class Parser {
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setAltitudeMax(args);
 						}
-						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 						_ctrl.incSeqAck();
 						break;
 					case CLASS_MEDIA_RECORD_STATE:
@@ -165,7 +167,7 @@ public class Parser {
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setMediaRecordState(args);
 						}
-						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 						_ctrl.incSeqAck();
 						break;
 					case CLASS_SPEED_SETTING_STATE:
@@ -173,23 +175,23 @@ public class Parser {
 							args = ByteBuffer.wrap(packetAD3,offset+11,size-11);
 							_navData.setSpeedMax(args);
 						}
-						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 						_ctrl.incSeqAck();
 						break;
 					default:
-						_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+						_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 						_ctrl.incSeqAck();
 						break;
 					}
 					break;
 				case PROJECT_COMMON:
 					seq = packetAD3[offset+2];
-					_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+					_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 					_ctrl.incSeqAck();
 					break;
 				default:
 					seq = packetAD3[offset+2];
-					_ctrl.sendMessage(MessageHandler.ack((byte)seq, _ctrl.getSeqAck()));
+					_ctrl.sendMessage(_mh.ack((byte)seq, _ctrl.getSeqAck()));
 					_ctrl.incSeqAck();
 					break;
 				}

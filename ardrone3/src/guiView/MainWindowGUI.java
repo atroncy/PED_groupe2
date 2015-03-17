@@ -8,8 +8,10 @@ import java.net.UnknownHostException;
 import javax.swing.JFrame;
 
 import ardrone3.Controller;
+import ardrone3.MessageHandler;
 import ardrone3.Parser;
 import ardrone3.ServerUDP;
+import model.ConsoleModel;
 import model.NavData;
 
 public class MainWindowGUI extends JFrame{
@@ -39,13 +41,17 @@ public class MainWindowGUI extends JFrame{
 	public static void main (String[] args){
 		NavData nav1 = new NavData();
 		NavData nav2 = new NavData();
+		ConsoleModel cm1 = new ConsoleModel("drone1");
+		ConsoleModel cm2 = new ConsoleModel("drone2");
 		
 		try {
-			Controller ctrl = new Controller("192.168.42.1", 43210);
+			Controller ctrl1 = new Controller("192.168.42.1", 43210);
 			Controller ctrl2 = new Controller("192.168.42.8", 43211);
-			ctrl.init("Drone_Uno");
-			KeyboardDrone k1 = new KeyboardDrone(ctrl);
-			KeyboardDrone k2 = new KeyboardDrone(ctrl2);
+			MessageHandler mh1 = new MessageHandler(cm1);
+			MessageHandler mh2 = new MessageHandler(cm2);
+			ctrl1.init("Drone_Uno");
+			KeyboardDrone k1 = new KeyboardDrone(ctrl1,mh1);
+			KeyboardDrone k2 = new KeyboardDrone(ctrl2,mh2);
 			MainWindowGUI mw = new MainWindowGUI(nav1,nav2,k1,k2);
 			
 			try {
@@ -59,7 +65,7 @@ public class MainWindowGUI extends JFrame{
 			nav2.triggerChange();
 			
 			
-			Parser p1 = new Parser(nav1,ctrl);
+			Parser p1 = new Parser(nav1,ctrl1,mh1);
 			ServerUDP s1 = new ServerUDP(p1,43210);
 			s1.start();
 		} catch (UnknownHostException e1) {

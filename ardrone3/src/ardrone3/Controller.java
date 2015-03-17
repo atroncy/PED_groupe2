@@ -52,7 +52,7 @@ public class Controller {
 		return 1;
 	}
 
-	public void sendMessage(Command cmd){
+	public synchronized void sendMessage(Command cmd){
 		byte[] cmdToSend = cmd.commandToByteArray();
 		System.out.println(cmd);
 		_packet = new DatagramPacket(cmdToSend, cmdToSend.length, this._ip, 54321);
@@ -64,27 +64,27 @@ public class Controller {
 		}
 	}
 
-	public byte getSeqData() {
+	public synchronized byte getSeqData() {
 		return _seqData;
 	}
 
-	public void incSeqData() {
+	public synchronized void incSeqData() {
 		this._seqData++;
 	}
 
-	public byte getSeqDataAck() {
+	public synchronized byte getSeqDataAck() {
 		return _seqDataAck;
 	}
 
-	public void incSeqDataAck() {
+	public synchronized void incSeqDataAck() {
 		this._seqDataAck++;
 	}
 
-	public byte getSeqAck() {
+	public synchronized byte getSeqAck() {
 		return _seqAck;
 	}
 
-	public void incSeqAck() {
+	public synchronized void incSeqAck() {
 		this._seqAck++;
 	}
 

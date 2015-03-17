@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import model.ConsoleModel;
+
 public class MessageHandler {
 	
 
@@ -55,7 +57,14 @@ public class MessageHandler {
 	private final static byte SET_CURRENT_TIME	= 2;
 	
 	
+	
 	//***************************************************************************
+	
+	private ConsoleModel _cm;
+	
+	public MessageHandler(ConsoleModel cm){
+		_cm = cm;
+	}
 	
 	
 	//*************************************
@@ -66,11 +75,11 @@ public class MessageHandler {
 	 * Create a "take-off" command.
 	 * @return
 	 */
-	public static Command takeoff(byte seq){
+	public Command takeoff(byte seq){
 		Command cmd_takeoff = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, PILOTING, TAKE_OFF);
 		cmd_takeoff._size = 11;
 		
-		//cm.addText("take off");
+		_cm.addText("take off");
 		return cmd_takeoff;
 	}
 	
@@ -78,10 +87,10 @@ public class MessageHandler {
 	 * Create a "landing" command.
 	 * @return
 	 */
-	public static Command landing(byte seq){
+	public Command landing(byte seq){
 		Command cmd_landing = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, PILOTING, LANDING);
 		cmd_landing._size = 11;
-		//cm.addText("landing");
+		_cm.addText("landing");
 		return cmd_landing;
 	}
 	
@@ -89,10 +98,10 @@ public class MessageHandler {
 	 * Create an "emergency" command.
 	 * @return
 	 */
-	public static Command emergency(byte seq){
+	public Command emergency(byte seq){
 		Command cmd_emergency = new Command(TYPE_DATA_WITH_ACK, 12, seq, BEBOP, PILOTING, EMERGENCY);
 		cmd_emergency._size = 11;
-		//cm.addText("emergency");
+		_cm.addText("emergency");
 		return cmd_emergency;
 	}
 	
@@ -100,10 +109,10 @@ public class MessageHandler {
 	 * Create a "flat trim" command.
 	 * @return
 	 */
-	public static Command flattrim(byte seq){
+	public Command flattrim(byte seq){
 		Command cmd_flattrim = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, PILOTING, FLAT_TRIM);
 		cmd_flattrim._size = 11;
-		//cm.addText("flat trim");
+		_cm.addText("flat trim");
 		return cmd_flattrim;
 	}
 		
@@ -114,10 +123,10 @@ public class MessageHandler {
 	 * @return
 	 * @throws InvalidArgumentException 
 	 */
-	public static Command gaz(byte value, byte seq) throws InvalidArgumentException{
+	public Command gaz(byte value, byte seq) throws InvalidArgumentException{
 		Command cmd_gaz = new Command(TYPE_DATA, 10, seq, BEBOP, PILOTING, PCMD);
 		cmd_gaz._size = 20;
-		//cm.addText("gaz");
+		_cm.addText("gaz");
 		cmd_gaz._arg = new byte[cmd_gaz._size - 11];
 		if (value<-100 || value>100)
 			throw new InvalidArgumentException("Value has to be [-100;100]");
@@ -134,10 +143,10 @@ public class MessageHandler {
 	 * @return
 	 * @throws InvalidArgumentException 
 	 */
-	public static Command cameraPan(byte value, byte seq) throws InvalidArgumentException{
+	public Command cameraPan(byte value, byte seq) throws InvalidArgumentException{
 		Command cmd_camera = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, CAMERA, ORIENTATION);
 		cmd_camera._size = 13;
-		//cm.addText("camera orientation");
+		_cm.addText("camera orientation");
 		cmd_camera._arg = new byte[cmd_camera._size - 11];
 		if (value<-100 || value>100)
 			throw new InvalidArgumentException("Value has to be [-100;100] in degree");
@@ -151,10 +160,10 @@ public class MessageHandler {
 	 * @param seq
 	 * @return
 	 */
-	public static Command recordStart(byte seq){
+	public Command recordStart(byte seq){
 		Command cmd_rec = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, MEDIA_RECORD, VIDEO);
 		cmd_rec._size = 15;
-		//cm.addtext("start recording");
+		_cm.addText("start recording");
 		cmd_rec._arg = Command.intToByteArray(REC_START);
 		return cmd_rec;
 	
@@ -166,17 +175,17 @@ public class MessageHandler {
 	 * @param seq
 	 * @return
 	 */
-	public static Command recordStop(byte seq){
+	public Command recordStop(byte seq){
 		Command cmd_rec = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, MEDIA_RECORD, VIDEO);
 		cmd_rec._size = 15;
-		//cm.addtext("stop recording");
+		_cm.addText("stop recording");
 		cmd_rec._arg = Command.intToByteArray(REC_STOP);
 		return cmd_rec;
 			
 	}
 	
 	
-	public static Command setCurrentDate(byte seq){
+	public Command setCurrentDate(byte seq){
 		Command cmd_date = new Command(TYPE_DATA_WITH_ACK, 11, seq, COMMON_PROJECT, COMMON_CLASS, SET_CURRENT_DATE);
 		cmd_date._size = 22;
 		cmd_date._arg = new byte [cmd_date._size - 11];
@@ -187,10 +196,11 @@ public class MessageHandler {
 	    for (int i = 0; i < 10; i++) {
 			cmd_date._arg[i] = tmp[i];
 		}
+	    _cm.addText("set date");
 		return cmd_date;
 	}
 
-	public static Command setCurrentTime(byte seq){
+	public Command setCurrentTime(byte seq){
 		Command cmd_time = new Command(TYPE_DATA_WITH_ACK, 11, seq, COMMON_PROJECT, COMMON_CLASS, SET_CURRENT_TIME);
 		cmd_time._size = 24;
 		cmd_time._arg = new byte[cmd_time._size - 11];
@@ -201,6 +211,7 @@ public class MessageHandler {
 	    for (int i = 0; i < 12; i++) {
 			cmd_time._arg[i] = tmp[i];
 		}
+	    _cm.addText("set time");
 		return cmd_time;
 	}
 	
@@ -210,7 +221,7 @@ public class MessageHandler {
 	 * @param seq our sequence number
 	 * @return
 	 */
-	public static Command ack(byte arg, byte seq){
+	public Command ack(byte arg, byte seq){
 		Command cmd_ack = new Command(TYPE_ACK, 254, seq);
 		cmd_ack._size = 8;
 		cmd_ack._arg = new byte[1];
