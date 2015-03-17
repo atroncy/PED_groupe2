@@ -23,6 +23,7 @@ public class DroneSendPanel extends JPanel implements Observer{
 	public DroneSendPanel(KeyboardDrone k, ConsoleModel cm){
 		
 		_cm = cm;
+		_cm.addObserver(this);
 		_consoleText = new JTextArea(_cm.getText());
 		_consoleText.addKeyListener(k);
 		_consoleText.setRows(NBROWS);

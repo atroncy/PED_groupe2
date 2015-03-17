@@ -121,7 +121,7 @@ public class ConsoleModel extends Observable{
 					    			}
 					    		} 
 					    		catch (FileNotFoundException e) {
-					    			System.out.println("Error while openning file");
+					    			System.out.println("Error while openning file!");
 					    		} 
 					        }
 					    }
