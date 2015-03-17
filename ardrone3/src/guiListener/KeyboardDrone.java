@@ -38,7 +38,6 @@ public class KeyboardDrone implements KeyListener{
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			_c.sendMessage(_mh.setCurrentTime(_c.getSeqDataAck()));

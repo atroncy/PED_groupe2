@@ -13,6 +13,7 @@ public class Controller {
 	private InetAddress _ip;
 	private int _port;
 
+	//Keep track of the different sequence number (one sequence num per type)
 	private byte _seqData 		= 0;
 	private byte _seqDataAck	= 0;
 	private byte _seqAck		= 0;
@@ -26,6 +27,11 @@ public class Controller {
 		this._port = port;
 	}
 
+	/**
+	 * Initiate the TCP connection to negotiate the ports in use, and initialize the UDP socket.
+	 * @param controlerName
+	 * @return
+	 */
 	public int init(String controlerName){
 		try {
 			//Establishing TCP connection
@@ -52,6 +58,11 @@ public class Controller {
 		return 1;
 	}
 
+	
+	/**
+	 * Convert a Command object into a byte array and send it as a UDP datagram.
+	 * @param cmd The command to send.
+	 */
 	public void sendMessage(Command cmd){
 		byte[] cmdToSend = cmd.commandToByteArray();
 		_packet = new DatagramPacket(cmdToSend, cmdToSend.length, this._ip, 54321);
@@ -63,6 +74,8 @@ public class Controller {
 		}
 	}
 
+	
+	//Getters & Setters to manage the sequence numbers.
 	public synchronized byte getSeqData() {
 		return _seqData;
 	}

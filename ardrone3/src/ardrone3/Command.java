@@ -7,10 +7,8 @@ import javax.xml.bind.DatatypeConverter;
 
 public class Command {
 	
-	
-	
-	
-	//Attributes of a command to be sent to the drone:
+		
+	//Attributes of a command to be sent to the drone. All of them are declared as constants (see MessageHandler)
 	//header
 	byte _type;
 	byte _id;
@@ -18,14 +16,14 @@ public class Command {
 	int _size;
 	//body
 	byte _project;
-	byte _class;	//droneClass
+	byte _class;	// called 'droneClass' in MessageHandler's constants.
 	short _cmd;
 	byte[] _arg;
 	
 
 	/**
 	 * Create a new command to be sent. The different arguments depends on the type of command
-	 * one does want to send. Please use the appropriate commands below to create the correct command.
+	 * one does want to send. Please use the appropriate commands in MessageHandler to create a command.
 	 * @param type
 	 * @param id
 	 * @param project
@@ -53,9 +51,9 @@ public class Command {
 		this._seq		= (byte) seqNum;
 	}
 	
-	
 	/**
 	 * Return the command in a human readable format.
+	 * @return
 	 */
 	public String toString(){
 		byte[] arr = this.commandToByteArray();
@@ -124,7 +122,12 @@ public class Command {
 	    		(byte)(value >>> 8)};
 	}
 	
-
+	
+	/**
+	 * Convert a double value into a IEEE 754 value.
+	 * @param value
+	 * @return
+	 */
 	public static byte[] doubleToIeee754 (double value){
 		long holder = 0;
 		holder = Double.doubleToRawLongBits(value);
@@ -135,6 +138,11 @@ public class Command {
 		return buffer.array();
 	}
 	
+	/**
+	 * Convert a float value into a IEEE 754 value.
+	 * @param value
+	 * @return
+	 */
 	public static byte[] floatToIeee754 (float value){
 		int holder = 0;
 		holder = Float.floatToRawIntBits(value);

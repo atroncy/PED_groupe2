@@ -13,9 +13,9 @@ public class MessageHandler {
 	//Constants to use to create commands (see the appropriate functions below)
 	
 	//type
-	private final static byte TYPE_ACK 					= 1;
-	private final static byte TYPE_DATA 				= 2;
-	private final static byte TYPE_DATA_WITH_ACK		= 4;
+	private final static byte TYPE_ACK 			= 1;
+	private final static byte TYPE_DATA 		= 2;
+	private final static byte TYPE_DATA_WITH_ACK= 4;
 	
 	//****** project BEBOP ******
 	private final static byte BEBOP 		= 1;
