@@ -11,16 +11,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import model.ConsoleModel;
+
 public class DroneSendPanel extends JPanel implements Observer{
 
 	private static final int NBROWS = 15; 
 	private static final int NBCOLS = 15;
 	private JTextArea _consoleText;
+	private ConsoleModel _cm;
 	
-	public DroneSendPanel(KeyboardDrone k){
+	public DroneSendPanel(KeyboardDrone k, ConsoleModel cm){
 		
-		
-		_consoleText = new JTextArea("Oui");
+		_cm = cm;
+		_consoleText = new JTextArea(_cm.getText());
 		_consoleText.addKeyListener(k);
 		_consoleText.setRows(NBROWS);
 		_consoleText.setColumns(NBCOLS);
@@ -37,7 +40,7 @@ public class DroneSendPanel extends JPanel implements Observer{
 	}
 	
 	public void update(Observable o, Object arg) {
-	//	_consoleText.setText(_consoleModel.getText());
+		_consoleText.setText(_cm.getText());
 	}
 		
 	
