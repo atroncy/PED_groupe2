@@ -56,10 +56,6 @@ public class MessageHandler {
 	private final static byte SPEED_SETTINGS	= 11;
 	//command SPEED_SETTINGS
 	private final static byte MAX_VERTICAL_SPEED= 0;
-
-
-	
-	
 	
 	
 	//****** project COMMON ******
@@ -67,8 +63,6 @@ public class MessageHandler {
 	private final static byte COMMON_CLASS 		= 4;
 	private final static byte SET_CURRENT_DATE	= 1;
 	private final static byte SET_CURRENT_TIME	= 2;
-	
-	
 	
 	//***************************************************************************
 	
@@ -92,6 +86,7 @@ public class MessageHandler {
 		cmd_takeoff._size = 11;
 		
 		_cm.addText("take off");
+		
 		return cmd_takeoff;
 	}
 	
@@ -103,6 +98,7 @@ public class MessageHandler {
 		Command cmd_landing = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, PILOTING, LANDING);
 		cmd_landing._size = 11;
 		_cm.addText("landing");
+		
 		return cmd_landing;
 	}
 	
@@ -114,6 +110,7 @@ public class MessageHandler {
 		Command cmd_emergency = new Command(TYPE_DATA_WITH_ACK, 12, seq, BEBOP, PILOTING, EMERGENCY);
 		cmd_emergency._size = 11;
 		_cm.addText("emergency");
+		
 		return cmd_emergency;
 	}
 	
@@ -125,6 +122,7 @@ public class MessageHandler {
 		Command cmd_flattrim = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, PILOTING, FLAT_TRIM);
 		cmd_flattrim._size = 11;
 		_cm.addText("flat trim");
+		
 		return cmd_flattrim;
 	}
 		
@@ -144,14 +142,15 @@ public class MessageHandler {
 			throw new InvalidArgumentException("Value has to be [-100;100]");
 		else
 			cmd_gaz._arg[4] = value;
+		
 		return cmd_gaz;
 	}
 	
 	/**
 	 * Change the camera's orientation. Value is in degree.
 	 * Negative values to turn the camera on the left, positive to turn on the right.
-	 * @param value
-	 * @param seq
+	 * @param value in degree
+	 * @param seq sequence number
 	 * @return
 	 * @throws InvalidArgumentException 
 	 */
@@ -164,12 +163,13 @@ public class MessageHandler {
 			throw new InvalidArgumentException("Value has to be [-100;100] in degree");
 		else
 			cmd_camera._arg[1] = value;
+		
 		return cmd_camera;
 	}
 	
 	/**
 	 * The application FreeFlight3 seems to use the depreciated method, so do we... note the mass storage id = 0.
-	 * @param seq
+	 * @param seq sequence number
 	 * @return
 	 */
 	public Command recordStart(byte seq){
@@ -189,13 +189,13 @@ public class MessageHandler {
 
 	/**
 	 * The application FreeFlight3 seems to use the depreciated method, so do we... note the mass storage id = 0.
-	 * @param seq
+	 * @param seq sequence number
 	 * @return
 	 */
 	public Command recordStop(byte seq){
 		Command cmd_rec = new Command(TYPE_DATA_WITH_ACK, 11, seq, BEBOP, MEDIA_RECORD, VIDEO);
 		cmd_rec._size = 16;
-		//_cm.addText("stop recording");
+		_cm.addText("stop recording");
 		byte [] tmp = Command.intToByteArray(REC_STOP);
 		cmd_rec._arg = new byte [cmd_rec._size - 11];
 		for (int i = 0; i < 4; i++) {
@@ -209,7 +209,7 @@ public class MessageHandler {
 	
 	/**
 	 * Set the current date, apparently needed to record videos.
-	 * @param seq
+	 * @param seq sequence number
 	 * @return
 	 */
 	public Command setCurrentDate(byte seq){
@@ -224,13 +224,14 @@ public class MessageHandler {
 			cmd_date._arg[i] = tmp[i];
 		}
 	    _cm.addText("set date");
+	    
 		return cmd_date;
 	}
 
 	
 	/**
 	 * Set the current time, apparently needed to record videos.
-	 * @param seq
+	 * @param seq sequence number
 	 * @return
 	 */
 	public Command setCurrentTime(byte seq){
@@ -245,6 +246,7 @@ public class MessageHandler {
 			cmd_time._arg[i] = tmp[i];
 		}
 	    _cm.addText("set time");
+	    
 		return cmd_time;
 	}
 	
@@ -259,13 +261,14 @@ public class MessageHandler {
 		cmd_ack._size = 8;
 		cmd_ack._arg = new byte[1];
 		cmd_ack._arg[0] = arg;
+		
 		return cmd_ack;
 	}
 	
 	/**
 	 * Set the maximal altitude, in meters.
 	 * @param maxAlt altitude max in m.
-	 * @param seq
+	 * @param seq sequence number
 	 * @return
 	 */
 	public Command setMaxAltitude(float maxAlt, byte seq){
@@ -280,7 +283,7 @@ public class MessageHandler {
 	/**
 	 * Set the maximal vertical speed.
 	 * @param maxSpeed max vertical speed in m/s.
-	 * @param seq
+	 * @param seq sequence number
 	 * @return
 	 */
 	public Command setMaxSpeed(float maxSpeed, byte seq){
