@@ -1,0 +1,147 @@
+
+
+enum8 ad3_type
+{
+	ACK		1		
+	DATA	2
+	LOW_DELAY		3	
+	DATA_WITH_ACK		4
+}
+
+enum8 ad3_project
+{
+	COMMON		0
+	BEBOP		1
+	COMMON_DEBUG		128
+	BEBOP_DEBUG			129
+}
+
+enum8 ad3_util_ld
+{
+	ACK		255	
+}
+
+struct ad3_header
+{
+	byte_order		little_endian;
+	ad3_type		type;
+	uint8		id;
+	uint8		seq;
+	uint32		size;
+} 
+
+struct ad3_data
+{
+	ad3_header		header;
+	ad3_project		project;
+	uint8		class;
+	uint16		cmd;
+	raw(size-11)	args;
+	print ("appended message or not ?");
+	ad3_header 		header;
+	switch(type)
+	{
+	case ad3_type::DATA :
+		ad3_project		project;
+		uint8		class;
+		uint16		cmd;
+		raw(size-11)	args;
+	case ad3_type::DATA_WITH_ACK : 
+		ad3_project		project;
+		uint8		class;
+		uint16		cmd;
+		raw(size-11)	args;
+	case ad3_type::LOW_DELAY : 
+		uint16		frameNumber;
+		ad3_util_ld		frameFlags;
+		switch(frameFlags)
+		{
+			case ad3_util_ld::ACK : 
+				raw(7)	highPacketsAck;
+				raw(8)	lowPacketsAck;
+				
+			default		:  print ("flags seems to be 0 or 1 for sent data, why ? who knows");
+				uint8		fragmentNumber;
+				uint8		fragmentsPerFrame;
+				raw(*)		data;
+		}
+	default		: 
+		raw(*)		args;
+	}
+}
+
+struct ad3_data_with_ack
+{
+	ad3_header		header;
+	ad3_project		project;
+	uint8		class;
+	uint16		cmd;
+	raw(size-11)	args;
+	print ("appended message or not ?");
+	ad3_header 		header;
+	switch(type)
+	{
+	case ad3_type::DATA :
+		ad3_project		project;
+		uint8		class;
+		uint16		cmd;
+		raw(size-11)	args;
+	case ad3_type::DATA_WITH_ACK : 
+		ad3_project		project;
+		uint8		class;
+		uint16		cmd;
+		raw(size-11)	args;
+	case ad3_type::LOW_DELAY : 
+		uint16		frameNumber;
+		ad3_util_ld		frameFlags;
+		switch(frameFlags)
+		{
+			case ad3_util_ld::ACK : 
+				raw(7)	highPacketsAck;
+				raw(8)	lowPacketsAck;
+				
+			default		:  print ("flags seems to be 0 or 1 for sent data, why ? who knows");
+				uint8		fragmentNumber;
+				uint8		fragmentsPerFrame;
+				raw(*)		data;
+		}
+	default		: 
+		raw(*)		args;
+	}
+}
+
+struct ad3_ack_ld
+{
+	raw(7)	highPacketsAck;
+	raw(8)	lowPacketsAck;
+}
+
+switch ad3_switch_low_delay #ad3_util_ld
+{
+case ad3_util_ld::ACK : ad3_ack_ld "";
+
+default		:  print ("flags seems to be 0 or 1 for sent data, why ? who knows");
+	uint8		fragmentNumber;
+	uint8		fragmentsPerFrame;
+	raw(*)		data;
+}
+
+struct ad3_low_delay
+{
+	ad3_header		header;
+	uint16		frameNumber;
+	ad3_util_ld		frameFlags;
+	ad3_switch_low_delay(frameFlags) "";
+}
+
+
+switch ad3_switch ad3_type
+{
+case ad3_type::DATA : ad3_data "";
+case ad3_type::DATA_WITH_ACK : ad3_data_with_ack "";
+case ad3_type::LOW_DELAY : ad3_low_delay "";
+
+default		: 
+	ad3_header		header;
+	raw(*)		args;
+}

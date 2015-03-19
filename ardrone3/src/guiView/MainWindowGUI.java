@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import systeme_de_drone_de_facade.Automatic;
 import ardrone3.Controller;
+import ardrone3.KeepAlive;
 import ardrone3.MessageHandler;
 import ardrone3.Parser;
 import ardrone3.ServerUDP;
@@ -50,7 +51,10 @@ public class MainWindowGUI extends JFrame{
 			Controller ctrl2 = new Controller("192.168.42.8", 43211);
 			MessageHandler mh1 = new MessageHandler(cm1);
 			MessageHandler mh2 = new MessageHandler(cm2);
+			KeepAlive ka1 = new KeepAlive(ctrl1,mh1);
+			KeepAlive ka2 = new KeepAlive(ctrl2,mh2);
 			ctrl1.init("Drone_Uno");
+			ka1.start();
 			KeyboardDrone k1 = new KeyboardDrone(ctrl1,mh1);
 			KeyboardDrone k2 = new KeyboardDrone(ctrl2,mh2);
 			Automatic auto = new Automatic(nav1, nav1, ctrl1, ctrl2, mh1, mh2);
